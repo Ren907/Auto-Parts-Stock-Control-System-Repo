@@ -25,7 +25,7 @@ namespace AutoPartsStockControlSystem
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Account/Login"),
+                LoginPath = new PathString("/Home/Login"),
                 Provider = new CookieAuthenticationProvider
                 {
                     // Enables the application to validate the security stamp when the user logs in.
@@ -58,11 +58,11 @@ namespace AutoPartsStockControlSystem
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "372980763937-7rgermefha195rmdmmrc7aal7cb9kn3q.apps.googleusercontent.com",
+                ClientSecret = "7qf0yTO3ekr0ub8183rvRuMf"
+            });
         }
     }
 }

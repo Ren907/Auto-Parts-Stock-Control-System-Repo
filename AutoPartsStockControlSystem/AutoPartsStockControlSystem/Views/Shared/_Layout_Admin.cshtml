@@ -21,14 +21,29 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    
+
                     <li>@Html.ActionLink("Search Stock", "AdminSearchStock", "AdminPage")</li>
                     <li>@Html.ActionLink("Users", "AdminUsers", "AdminPage")</li>
                     <li>@Html.ActionLink("Reports", "AdminReports", "AdminPage")</li>
                     <li>@Html.ActionLink("Suppliers", "AdminSuppliers", "AdminPage")</li>
                     <li>@Html.ActionLink("Send Message", "AdminSendMessage", "AdminPage")</li>
                 </ul>
-                @Html.Partial("_LoginPartial")
+
+                <ul class="nav navbar-nav" style="float: right !important">
+                    @if (Session["Email"] != null)
+                    {
+                        <li><p style="color:#fff;margin-top:15px;"> Hello @Session["Email"] </p></li>
+                        <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
+                    }
+
+                    else
+                    {
+                        <li>@Html.ActionLink("Login", "Login", "Home")</li>
+                    }
+
+                </ul>
+
+               
             </div>
         </div>
     </div>

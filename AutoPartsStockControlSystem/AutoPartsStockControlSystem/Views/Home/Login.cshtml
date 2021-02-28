@@ -1,0 +1,88 @@
+﻿
+<meta name=”viewport” content=”width =device-width, initial-scale=1.0” />
+
+
+@using AutoPartsStockControlSystem.Models;
+@model LoginModel
+
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Auto Parts Stock Control System</h2>
+
+<h3>Log-In</h3>
+
+<section id="loginForm">
+    @using (Html.BeginForm())
+
+    {
+        @Html.AntiForgeryToken()
+        <br>
+        <br />
+        <h5>Please Enter Your Credentials</h5>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br>
+        <br />
+        <br />
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <br>
+        <br />
+        <p>
+            @Html.ActionLink("Forgot your password?", "ForgotPassword")
+
+        </p>
+
+        <br />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Log in" class="btn btn-primary" />
+            </div>
+        </div>
+        <br>
+        <br />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Google Sign In" class="btn btn-info col-lg" />
+            </div>
+        </div>
+
+
+    }
+
+    <label style="color:#f00;margin-top:15px;">@ViewBag.Notification </label>
+</section>
+
+
+ 
+
+
+
+
+
+
+
+
+
+

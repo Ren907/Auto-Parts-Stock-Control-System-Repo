@@ -1,8 +1,39 @@
-﻿
+﻿<link rel="stylesheet" type="text/css" href="~/CSS/DashboardButton.css">
 @{
     ViewBag.Title = "UserDashboard";
     Layout = "~/Views/Shared/_Layout_User.cshtml";
 }
 
-<h2>UserDashboard</h2>
+<h3>UserDashboard</h3>
 
+<h1 class="display-2 text-center">Auto Parts Stock Control System</h1>
+<br />
+<br />
+
+<h4 class="display-2">Problem Statement:</h4>
+
+<br />
+<blockquote class="blockquote text-center">
+
+    <p class="mb-0">
+        This application is built to solve the problem of having poor, outdated, and inefficient stock control systems already existing in small
+        to medium auto parts businesses that are part of the automotive industry.
+    </p>
+
+</blockquote>
+
+<br />
+<br />
+<br />
+
+   <div class="flex-parent jc-center">
+    <button class="button" onclick="@("window.location.href='" + @Url.Action("UserSearchStock", "UserPage") + "'");"><span>Search Stock</span></button>
+    <button class="button" onclick="@("window.location.href='" + @Url.Action("UserAddNewItem", "UserPage") + "'");"><span>Add New Item</span></button>
+    <button class="button" onclick="@("window.location.href='" + @Url.Action("UserUpdateStock", "UserPage") + "'");"><span>Update Stock</span></button>
+   </div>
+    <br />
+    <div class="flex-parent jc-center">
+        <button class="button" onclick="@("window.location.href='" + @Url.Action("UserSales", "UserPage") + "'");"><span>Sales</span></button>
+        <button class="button" onclick="@("window.location.href='" + @Url.Action("UserSuppliers", "UserPage") + "'");"><span>Suppliers</span></button>
+        <button class="button" onclick="@("window.location.href='" + @Url.Action("UserSendMessage", "UserPage") + "'");"><span>Send Message</span></button>
+    </div>

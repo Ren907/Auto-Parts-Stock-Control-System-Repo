@@ -11,6 +11,7 @@ namespace AutoPartsStockControlSystem.Controllers
         // GET: AdminDashBoard
         public ActionResult AdminDashboard()
         {
+
             return View();
         }
 

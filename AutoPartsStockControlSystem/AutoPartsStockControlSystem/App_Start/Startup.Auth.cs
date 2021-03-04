@@ -7,6 +7,7 @@ using Microsoft.Owin.Security.Google;
 using Owin;
 using AutoPartsStockControlSystem.Models;
 
+
 namespace AutoPartsStockControlSystem
 {
     public partial class Startup
@@ -34,7 +35,7 @@ namespace AutoPartsStockControlSystem
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
-            });            
+            });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.
@@ -54,14 +55,10 @@ namespace AutoPartsStockControlSystem
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
-
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
-                ClientId = "372980763937-7rgermefha195rmdmmrc7aal7cb9kn3q.apps.googleusercontent.com",
-                ClientSecret = "7qf0yTO3ekr0ub8183rvRuMf"
+                ClientId = "372636825334-e3q8srug5bcql86k7nqbghj0lmbgq2bb.apps.googleusercontent.com",
+                ClientSecret = "wYI9CM0Y5wijHOdOo05RujZG"
             });
         }
     }

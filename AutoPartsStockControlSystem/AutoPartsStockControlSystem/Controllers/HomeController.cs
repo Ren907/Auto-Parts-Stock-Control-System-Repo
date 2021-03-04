@@ -1,16 +1,11 @@
 ﻿
 using System.Linq;
-
 using System.Web.Mvc;
-
-using AutoPartsStockControlSystem.Models;
-
-
 using System;
-
 using System.Data;
 using System.Net.Mail;
 using System.Net;
+using AutoPartsStockControlSystem.Models;
 
 
 

@@ -200,6 +200,7 @@
     <Compile Include="Models\Sale.cs">
       <DependentUpon>EntityDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SendEmailModel.cs" />
     <Compile Include="Models\Supplier.cs">
       <DependentUpon>EntityDataModel.tt</DependentUpon>
     </Compile>
@@ -301,7 +302,9 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\ForgotPassword.cshtml" />
     <Content Include="Views\Home\ResetPassword.cshtml" />
+    <Content Include="Views\AdminPage\SendEmailConfig.cshtml" />
     <None Include="Views\Shared\_Layout_ResetPassword.cshtml" />
+    <Content Include="Views\UserPage\SendEmailConfig.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

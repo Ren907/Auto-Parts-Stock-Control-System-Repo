@@ -55,11 +55,11 @@ namespace AutoPartsStockControlSystem
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            {
-                ClientId = "372636825334-e3q8srug5bcql86k7nqbghj0lmbgq2bb.apps.googleusercontent.com",
-                ClientSecret = "wYI9CM0Y5wijHOdOo05RujZG"
-            });
+            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            //{
+            //    ClientId = "",
+            //    ClientSecret = ""
+            //});
         }
     }
 }

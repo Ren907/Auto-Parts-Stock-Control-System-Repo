@@ -41,6 +41,11 @@ namespace AutoPartsStockControlSystem.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult SendEmailConfig()
+        {
+            return View();
+        }
 
     }
 }

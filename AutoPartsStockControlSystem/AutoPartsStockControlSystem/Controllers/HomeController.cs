@@ -6,8 +6,8 @@ using System.Data;
 using System.Net.Mail;
 using System.Net;
 using AutoPartsStockControlSystem.Models;
-
-
+using System.Security.Cryptography;
+using System.Text;
 
 namespace AutoPartsStockControlSystem.Controllers
 {
@@ -29,13 +29,20 @@ namespace AutoPartsStockControlSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model)
         {
-            var checkLoginAdmin = db.Users.Where(x => x.Email.Equals(model.Email) && x.Password.Equals(model.Password) && x.UserType.Equals("Admin")).FirstOrDefault();
 
-            var checkLoginUser = db.Users.Where(x => x.Email.Equals(model.Email) && x.Password.Equals(model.Password) && x.UserType.Equals("User")).FirstOrDefault();
+            
+            string HashedPassword = GenerateSHA256Hash(model.Password);
+
+            var checkLoginAdmin = db.Users.Where(x => x.Email.Equals(model.Email) && x.Password.Equals(HashedPassword) && x.UserType.Equals("Admin")).FirstOrDefault();
+
+            var checkLoginUser = db.Users.Where(x => x.Email.Equals(model.Email) && x.Password.Equals(HashedPassword) && x.UserType.Equals("User")).FirstOrDefault();
 
 
             if (checkLoginAdmin != null)
             {
+             
+
+
                 Session["Email"] = model.Email.ToString();
                 Session["Password"] = model.Password.ToString();
                 return RedirectToAction("AdminDashboard", "AdminPage");
@@ -61,6 +68,10 @@ namespace AutoPartsStockControlSystem.Controllers
             return View();
         }
 
+
+
+
+
         ////////////////////////////////////////////////////////////////////Logout Function
 
         public ActionResult Logout()
@@ -85,7 +96,7 @@ namespace AutoPartsStockControlSystem.Controllers
             var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
             using (var context = new DataEntity1())
             {
-                var getUser = (from s in context.Users where s.Email == EmailID select s).FirstOrDefault();
+                var getUser = (from gu in context.Users where gu.Email == EmailID select gu).FirstOrDefault();
                 if (getUser != null)
                 {
                     getUser.ResetPasswordCode = resetCode;
@@ -177,8 +188,14 @@ namespace AutoPartsStockControlSystem.Controllers
                     var user = context.Users.Where(a => a.ResetPasswordCode == model.ResetCode).FirstOrDefault();
                     if (user != null)
                     {
-                        //you can encrypt password here, we are not doing it
-                        user.Password = model.NewPassword;
+                        //Hash and Salt password before saving changes
+
+                        string Salt = CreateSalt(10);
+                        string HashedPassword = GenerateSHA256Hash(model.ConfirmPassword);
+
+               
+                        user.Password = HashedPassword;
+                            
                         //make resetpasswordcode empty string now
                         user.ResetPasswordCode = "";
                         //to avoid validation issues, disable it
@@ -199,6 +216,41 @@ namespace AutoPartsStockControlSystem.Controllers
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+        //  Create salt bytes 
+
+        public string CreateSalt(int size)
+        {
+            var rng = new RNGCryptoServiceProvider();
+            var buff = new byte[size];
+            rng.GetBytes(buff);
+            return Convert.ToBase64String(buff);
+        }
+
+
+        // Generating the 256 hash
+
+        public string GenerateSHA256Hash(string input)
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(input);
+            SHA256Managed sha256hashstring = new SHA256Managed();
+            byte[] hash = sha256hashstring.ComputeHash(bytes);
+
+            return ByteArrayToHexString(hash);
+
+        }
+
+        // convert byte array to hex strings
+
+        public static string ByteArrayToHexString(byte[] ba)
+        {
+            StringBuilder hex = new StringBuilder(ba.Length * 2);
+            foreach (byte b in ba)
+                hex.AppendFormat("{0:x2}", b);
+            return hex.ToString();
+        }
+
+
+       
     }
 }  
 

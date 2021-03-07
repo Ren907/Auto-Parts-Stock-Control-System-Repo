@@ -1,7 +1,9 @@
 ﻿
 @{
-    ViewBag.Title = "SendEmailConfig";
-    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+                /**/
+
+                ViewBag.Title = "SendEmailConfig";
+                Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
 
 @{
@@ -33,13 +35,13 @@
         WebMail.Send(to: ToEmail, subject: SubJect, body: Body, cc: cc, bcc: Bcc, isBodyHtml: true);
         <hr />
         <div class="text-success">
-            Email Sent Successfully.
+            Your message was sent successfully!
         </div>
     }
     catch (Exception)
     {
         <div class="text-danger">
-            Problem while sending email, please check gmail server details.
+            Your message could not be sent!. Please check email configuration.
         </div>
     }
 }

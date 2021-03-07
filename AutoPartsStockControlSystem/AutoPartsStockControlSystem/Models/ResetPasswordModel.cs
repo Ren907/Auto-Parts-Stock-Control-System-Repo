@@ -16,7 +16,9 @@ namespace AutoPartsStockControlSystem.Models
         [Compare("NewPassword", ErrorMessage = "New password and confirm password does not match")]
         public string ConfirmPassword { get; set; }
 
-     
+        
+        public string Salt { get; set; }
+
         [Required]
         public string ResetCode { get; set; }
     }

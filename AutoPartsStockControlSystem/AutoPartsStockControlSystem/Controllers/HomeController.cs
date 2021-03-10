@@ -15,7 +15,7 @@ namespace AutoPartsStockControlSystem.Controllers
     public class HomeController : Controller
     {
         //////////////////////////////////////////////////// Declare Data Entitry with Database
-        DataEntity1 db = new DataEntity1();
+        Entities db = new Entities();
 
         /////////////////////////////////////////////////////Login Function
 
@@ -60,10 +60,11 @@ namespace AutoPartsStockControlSystem.Controllers
             else
             {
 
+                
                 ViewBag.Notification = "Wrong E-Mail or Password";
                 ViewBag.EmailNotification = "Please Enter Email Address";
                 ViewBag.PasswordNotification = "Please Enter Password ";
-
+               
             }
             return View();
         }
@@ -94,7 +95,7 @@ namespace AutoPartsStockControlSystem.Controllers
             string resetCode = Guid.NewGuid().ToString();
             var verifyUrl = "/Home/ResetPassword/" + resetCode;
             var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
-            using (var context = new DataEntity1())
+            using (var context = new Entities())
             {
                 var getUser = (from gu in context.Users where gu.Email == EmailID select gu).FirstOrDefault();
                 if (getUser != null)
@@ -159,7 +160,7 @@ namespace AutoPartsStockControlSystem.Controllers
                 return HttpNotFound();
             }
 
-            using (var context = new DataEntity1())
+            using (var context = new Entities())
             {
                 var user = context.Users.Where(a => a.ResetPasswordCode == id).FirstOrDefault();
                 if (user != null)
@@ -183,14 +184,14 @@ namespace AutoPartsStockControlSystem.Controllers
             var message = "";
             if (ModelState.IsValid)
             {
-                using (var context = new DataEntity1())
+                using (var context = new Entities())
                 {
                     var user = context.Users.Where(a => a.ResetPasswordCode == model.ResetCode).FirstOrDefault();
                     if (user != null)
                     {
                         //Hash and Salt password before saving changes
 
-                        string Salt = CreateSalt(10);
+                        //string Salt = CreateSalt(10);
                         string HashedPassword = GenerateSHA256Hash(model.ConfirmPassword);
 
                
@@ -216,28 +217,35 @@ namespace AutoPartsStockControlSystem.Controllers
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-        //  Create salt bytes 
+        ////  Create salt bytes 
 
-        public string CreateSalt(int size)
-        {
-            var rng = new RNGCryptoServiceProvider();
-            var buff = new byte[size];
-            rng.GetBytes(buff);
-            return Convert.ToBase64String(buff);
-        }
+        //public string CreateSalt(int size)
+        //{
+        //    var rng = new RNGCryptoServiceProvider();
+        //    var buff = new byte[size];
+        //    rng.GetBytes(buff);
+        //    return Convert.ToBase64String(buff);
+        //}
+
 
 
         // Generating the 256 hash
 
         public string GenerateSHA256Hash(string input)
         {
+
+            if (string.IsNullOrEmpty(input)) return null;
+
             byte[] bytes = Encoding.UTF8.GetBytes(input);
             SHA256Managed sha256hashstring = new SHA256Managed();
             byte[] hash = sha256hashstring.ComputeHash(bytes);
 
             return ByteArrayToHexString(hash);
 
+
+
         }
+
 
         // convert byte array to hex strings
 

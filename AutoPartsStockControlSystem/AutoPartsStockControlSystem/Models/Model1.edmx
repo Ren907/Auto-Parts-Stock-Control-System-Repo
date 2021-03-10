@@ -10,12 +10,12 @@
             <PropertyRef Name="ItemCode" />
           </Key>
           <Property Name="ItemCode" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="ItemDescription" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="ItemCategory" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="ItemCompatability" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="ItemPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="ItemQuantity" Type="int" Nullable="false" />
-          <Property Name="ItemSupplierFK" Type="varchar" MaxLength="50" />
+          <Property Name="ItemDescription" Type="varchar" MaxLength="50" />
+          <Property Name="ItemCategory" Type="varchar" MaxLength="50" />
+          <Property Name="ItemCompatability" Type="varchar" MaxLength="50" />
+          <Property Name="ItemPrice" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ItemQuantity" Type="int" />
+          <Property Name="ItemSupplierFK" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ItemSales">
           <Key>
@@ -50,12 +50,12 @@
           <Key>
             <PropertyRef Name="SupplierID" />
           </Key>
-          <Property Name="SupplierID" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="SupplierName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="SupplierProductsType" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="SupplierContact" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="SupplierEmail" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="SupplierExperience" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SupplierID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SupplierName" Type="varchar" MaxLength="50" />
+          <Property Name="SupplierProductsType" Type="varchar" MaxLength="50" />
+          <Property Name="SupplierContact" Type="varchar" MaxLength="50" />
+          <Property Name="SupplierEmail" Type="varchar" MaxLength="50" />
+          <Property Name="SupplierExperience" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -91,7 +91,7 @@
           <Property Name="VehicleModelYear" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="FK_Items_Suppliers">
-          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="0..1" />
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1" />
           <End Role="Items" Type="Self.Items" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Suppliers">
@@ -162,6 +162,37 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemSales" EntityType="Self.ItemSales" Schema="dbo" store:Type="Tables" />
@@ -205,15 +236,15 @@
             <PropertyRef Name="ItemCode" />
           </Key>
           <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ItemDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ItemCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ItemCompatability" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ItemPrice" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="ItemQuantity" Type="Int32" Nullable="false" />
-          <Property Name="ItemSupplierFK" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Supplier" Relationship="Self.FK_Items_Suppliers" FromRole="Items" ToRole="Suppliers" />
+          <Property Name="ItemDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ItemCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ItemCompatability" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ItemPrice" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ItemQuantity" Type="Int32" />
+          <Property Name="ItemSupplierFK" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Sales" Relationship="Self.ItemSales" FromRole="Items" ToRole="Sales" />
           <NavigationProperty Name="Vehicles" Relationship="Self.ItemsVehicles" FromRole="Items" ToRole="Vehicles" />
+          <NavigationProperty Name="Supplier" Relationship="Model.FK_Items_Suppliers" FromRole="Item" ToRole="Supplier" />
         </EntityType>
         <EntityType Name="Sale">
           <Key>
@@ -234,13 +265,13 @@
           <Key>
             <PropertyRef Name="SupplierID" />
           </Key>
-          <Property Name="SupplierID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="SupplierName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="SupplierProductsType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="SupplierContact" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="SupplierEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="SupplierExperience" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Items" Relationship="Self.FK_Items_Suppliers" FromRole="Suppliers" ToRole="Items" />
+          <Property Name="SupplierID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SupplierName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SupplierProductsType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SupplierContact" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SupplierEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SupplierExperience" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Items" Relationship="Model.FK_Items_Suppliers" FromRole="Supplier" ToRole="Item" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -264,8 +295,8 @@
           <Property Name="Password" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UserType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ResetPasswordCode" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Sales" Relationship="Self.FK_Sales_Users" FromRole="Users" ToRole="Sales" />
           <Property Name="Salt" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Sales" Relationship="Self.FK_Sales_Users" FromRole="Users" ToRole="Sales" />
         </EntityType>
         <EntityType Name="Vehicle">
           <Key>
@@ -277,18 +308,6 @@
           <Property Name="VehicleModelYear" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Items" Relationship="Self.ItemsVehicles" FromRole="Vehicles" ToRole="Items" />
         </EntityType>
-        <Association Name="FK_Items_Suppliers">
-          <End Role="Suppliers" Type="Self.Supplier" Multiplicity="0..1" />
-          <End Role="Items" Type="Self.Item" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Suppliers">
-              <PropertyRef Name="SupplierID" />
-            </Principal>
-            <Dependent Role="Items">
-              <PropertyRef Name="ItemSupplierFK" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Sales_Users">
           <End Role="Users" Type="Self.User" Multiplicity="0..1" />
           <End Role="Sales" Type="Self.Sale" Multiplicity="*" />
@@ -309,17 +328,13 @@
           <End Role="Items" Type="Self.Item" Multiplicity="*" />
           <End Role="Vehicles" Type="Self.Vehicle" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="DataEntity1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Items" EntityType="Self.Item" />
           <EntitySet Name="Sales" EntityType="Self.Sale" />
           <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="Vehicles" EntityType="Self.Vehicle" />
-          <AssociationSet Name="FK_Items_Suppliers" Association="Self.FK_Items_Suppliers">
-            <End Role="Suppliers" EntitySet="Suppliers" />
-            <End Role="Items" EntitySet="Items" />
-          </AssociationSet>
           <AssociationSet Name="FK_Sales_Users" Association="Self.FK_Sales_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Sales" EntitySet="Sales" />
@@ -332,13 +347,70 @@
             <End Role="Items" EntitySet="Items" />
             <End Role="Vehicles" EntitySet="Vehicles" />
           </AssociationSet>
+          <AssociationSet Name="FK_Items_Suppliers" Association="Model.FK_Items_Suppliers">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="Item" EntitySet="Items" />
+          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(Model.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(Model.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
+        <Association Name="FK_Items_Suppliers">
+          <End Type="Model.Supplier" Role="Supplier" Multiplicity="1" />
+          <End Type="Model.Item" Role="Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierID" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="ItemSupplierFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="DataEntity1">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="Items">
             <EntityTypeMapping TypeName="Model.Item">
               <MappingFragment StoreEntitySet="Items">
@@ -392,7 +464,6 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="Model.User">
               <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="Salt" ColumnName="Salt" />
                 <ScalarProperty Name="IDNumber" ColumnName="IDNumber" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Surname" ColumnName="Surname" />
@@ -401,6 +472,7 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="UserType" ColumnName="UserType" />
                 <ScalarProperty Name="ResetPasswordCode" ColumnName="ResetPasswordCode" />
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -430,6 +502,30 @@
               <ScalarProperty Name="VehicleID" ColumnName="VehicleID" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Model.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Model.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Model.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Model.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Model.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Model.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Model.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

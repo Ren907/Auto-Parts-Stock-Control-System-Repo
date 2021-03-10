@@ -25,14 +25,14 @@ namespace AutoPartsStockControlSystem.Models
         public string ItemDescription { get; set; }
         public string ItemCategory { get; set; }
         public string ItemCompatability { get; set; }
-        public decimal ItemPrice { get; set; }
-        public int ItemQuantity { get; set; }
-        public string ItemSupplierFK { get; set; }
+        public Nullable<decimal> ItemPrice { get; set; }
+        public Nullable<int> ItemQuantity { get; set; }
+        public int ItemSupplierFK { get; set; }
     
-        public virtual Supplier Supplier { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Sale> Sales { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Vehicle> Vehicles { get; set; }
+        public virtual Supplier Supplier { get; set; }
     }
 }

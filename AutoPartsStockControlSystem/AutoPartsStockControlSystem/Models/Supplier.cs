@@ -20,7 +20,7 @@ namespace AutoPartsStockControlSystem.Models
             this.Items = new HashSet<Item>();
         }
     
-        public string SupplierID { get; set; }
+        public int SupplierID { get; set; }
         public string SupplierName { get; set; }
         public string SupplierProductsType { get; set; }
         public string SupplierContact { get; set; }

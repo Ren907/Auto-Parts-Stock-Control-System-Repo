@@ -15,7 +15,7 @@ namespace AutoPartsStockControlSystem.Controllers
     public class HomeController : Controller
     {
         //////////////////////////////////////////////////// Declare Data Entitry with Database
-        Entities db = new Entities();
+        EntitiesAPSCS db = new EntitiesAPSCS();
 
         /////////////////////////////////////////////////////Login Function
 
@@ -95,7 +95,7 @@ namespace AutoPartsStockControlSystem.Controllers
             string resetCode = Guid.NewGuid().ToString();
             var verifyUrl = "/Home/ResetPassword/" + resetCode;
             var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
-            using (var context = new Entities())
+            using (var context = new EntitiesAPSCS())
             {
                 var getUser = (from gu in context.Users where gu.Email == EmailID select gu).FirstOrDefault();
                 if (getUser != null)
@@ -160,7 +160,7 @@ namespace AutoPartsStockControlSystem.Controllers
                 return HttpNotFound();
             }
 
-            using (var context = new Entities())
+            using (var context = new EntitiesAPSCS())
             {
                 var user = context.Users.Where(a => a.ResetPasswordCode == id).FirstOrDefault();
                 if (user != null)
@@ -184,7 +184,7 @@ namespace AutoPartsStockControlSystem.Controllers
             var message = "";
             if (ModelState.IsValid)
             {
-                using (var context = new Entities())
+                using (var context = new EntitiesAPSCS())
                 {
                     var user = context.Users.Where(a => a.ResetPasswordCode == model.ResetCode).FirstOrDefault();
                     if (user != null)

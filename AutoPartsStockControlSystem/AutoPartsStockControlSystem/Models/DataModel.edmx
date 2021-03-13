@@ -4,58 +4,58 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ModelAPSCS.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Items">
           <Key>
-            <PropertyRef Name="ItemCode" />
+            <PropertyRef Name="ItemID" />
           </Key>
-          <Property Name="ItemCode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ItemID" Type="int" Nullable="false" />
+          <Property Name="ItemPart" Type="varchar" MaxLength="50" />
           <Property Name="ItemDescription" Type="varchar" MaxLength="50" />
           <Property Name="ItemCategory" Type="varchar" MaxLength="50" />
           <Property Name="ItemCompatability" Type="varchar" MaxLength="50" />
           <Property Name="ItemPrice" Type="decimal" Precision="18" Scale="0" />
           <Property Name="ItemQuantity" Type="int" />
-          <Property Name="ItemSupplierFK" Type="int" Nullable="false" />
+          <Property Name="ItemSupplierFK" Type="int" />
         </EntityType>
         <EntityType Name="ItemSales">
           <Key>
-            <PropertyRef Name="ItemCode" />
+            <PropertyRef Name="ItemID" />
             <PropertyRef Name="SaleID" />
           </Key>
-          <Property Name="ItemCode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ItemID" Type="int" Nullable="false" />
           <Property Name="SaleID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ItemsVehicles">
           <Key>
-            <PropertyRef Name="ItemCode" />
+            <PropertyRef Name="ItemID" />
             <PropertyRef Name="VehicleID" />
           </Key>
-          <Property Name="ItemCode" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="VehicleID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ItemID" Type="int" Nullable="false" />
+          <Property Name="VehicleID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Sales">
           <Key>
             <PropertyRef Name="SaleID" />
           </Key>
           <Property Name="SaleID" Type="int" Nullable="false" />
-          <Property Name="ClientName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="ClientID" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="SaleDate" Type="date" Nullable="false" />
-          <Property Name="SaleTime" Type="time" Precision="7" Nullable="false" />
-          <Property Name="ItemQuantitySold" Type="int" Nullable="false" />
-          <Property Name="ItemCodeFK" Type="varchar" MaxLength="50" />
-          <Property Name="UserIDFK" Type="varchar" MaxLength="50" />
+          <Property Name="ClientName" Type="varchar" MaxLength="30" />
+          <Property Name="ClientIDCard" Type="varchar" MaxLength="30" />
+          <Property Name="SaleDate" Type="datetime" />
+          <Property Name="ItemQuantitySold" Type="int" />
+          <Property Name="ItemPartFK" Type="varchar" MaxLength="50" />
+          <Property Name="UserIDFK" Type="int" />
         </EntityType>
         <EntityType Name="Suppliers">
           <Key>
             <PropertyRef Name="SupplierID" />
           </Key>
           <Property Name="SupplierID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SupplierName" Type="varchar" MaxLength="50" />
+          <Property Name="SupplierName" Type="varchar" MaxLength="30" />
           <Property Name="SupplierProductsType" Type="varchar" MaxLength="50" />
-          <Property Name="SupplierContact" Type="varchar" MaxLength="50" />
+          <Property Name="SupplierContact" Type="varchar" MaxLength="30" />
           <Property Name="SupplierEmail" Type="varchar" MaxLength="50" />
-          <Property Name="SupplierExperience" Type="varchar" MaxLength="50" />
+          <Property Name="SupplierExperience" Type="varchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -69,29 +69,29 @@
         </EntityType>
         <EntityType Name="Users">
           <Key>
-            <PropertyRef Name="IDNumber" />
+            <PropertyRef Name="UserID" />
           </Key>
-          <Property Name="IDNumber" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Surname" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Contact" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Password" Type="varchar" MaxLength="500" Nullable="false" />
-          <Property Name="UserType" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="ResetPasswordCode" Type="varchar" MaxLength="500" />
-          <Property Name="Salt" Type="varchar" MaxLength="500" />
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDCard" Type="varchar" MaxLength="25" />
+          <Property Name="Name" Type="varchar" MaxLength="30" />
+          <Property Name="Surname" Type="varchar" MaxLength="30" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Contact" Type="varchar" MaxLength="30" />
+          <Property Name="Password" Type="varchar" MaxLength="300" />
+          <Property Name="UserType" Type="varchar" MaxLength="20" />
+          <Property Name="ResetPasswordCode" Type="varchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="Vehicles">
           <Key>
             <PropertyRef Name="VehicleID" />
           </Key>
-          <Property Name="VehicleID" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="VehicleMake" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="VehicleModel" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="VehicleModelYear" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="VehicleID" Type="int" Nullable="false" />
+          <Property Name="VehicleMake" Type="varchar" MaxLength="30" />
+          <Property Name="VehicleModel" Type="varchar" MaxLength="30" />
+          <Property Name="VehicleModelYear" Type="varchar" MaxLength="30" />
         </EntityType>
         <Association Name="FK_Items_Suppliers">
-          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1" />
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="0..1" />
           <End Role="Items" Type="Self.Items" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Suppliers">
@@ -107,10 +107,10 @@
           <End Role="ItemSales" Type="Self.ItemSales" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Items">
-              <PropertyRef Name="ItemCode" />
+              <PropertyRef Name="ItemID" />
             </Principal>
             <Dependent Role="ItemSales">
-              <PropertyRef Name="ItemCode" />
+              <PropertyRef Name="ItemID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -131,10 +131,10 @@
           <End Role="ItemsVehicles" Type="Self.ItemsVehicles" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Items">
-              <PropertyRef Name="ItemCode" />
+              <PropertyRef Name="ItemID" />
             </Principal>
             <Dependent Role="ItemsVehicles">
-              <PropertyRef Name="ItemCode" />
+              <PropertyRef Name="ItemID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -155,7 +155,7 @@
           <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
-              <PropertyRef Name="IDNumber" />
+              <PropertyRef Name="UserID" />
             </Principal>
             <Dependent Role="Sales">
               <PropertyRef Name="UserIDFK" />
@@ -193,7 +193,7 @@
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <EntityContainer Name="ModelStoreContainer">
+        <EntityContainer Name="ModelAPSCSStoreContainer">
           <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemSales" EntityType="Self.ItemSales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemsVehicles" EntityType="Self.ItemsVehicles" Schema="dbo" store:Type="Tables" />
@@ -230,34 +230,34 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="ModelAPSCS" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Item">
           <Key>
-            <PropertyRef Name="ItemCode" />
+            <PropertyRef Name="ItemID" />
           </Key>
-          <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ItemID" Type="Int32" Nullable="false" />
+          <Property Name="ItemPart" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ItemDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ItemCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ItemCompatability" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ItemPrice" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="ItemQuantity" Type="Int32" />
-          <Property Name="ItemSupplierFK" Type="Int32" Nullable="false" />
+          <Property Name="ItemSupplierFK" Type="Int32" />
+          <NavigationProperty Name="Supplier" Relationship="Self.FK_Items_Suppliers" FromRole="Items" ToRole="Suppliers" />
           <NavigationProperty Name="Sales" Relationship="Self.ItemSales" FromRole="Items" ToRole="Sales" />
           <NavigationProperty Name="Vehicles" Relationship="Self.ItemsVehicles" FromRole="Items" ToRole="Vehicles" />
-          <NavigationProperty Name="Supplier" Relationship="Model.FK_Items_Suppliers" FromRole="Item" ToRole="Supplier" />
         </EntityType>
         <EntityType Name="Sale">
           <Key>
             <PropertyRef Name="SaleID" />
           </Key>
           <Property Name="SaleID" Type="Int32" Nullable="false" />
-          <Property Name="ClientName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ClientID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="SaleDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="SaleTime" Type="Time" Nullable="false" Precision="7" />
-          <Property Name="ItemQuantitySold" Type="Int32" Nullable="false" />
-          <Property Name="ItemCodeFK" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UserIDFK" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ClientName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ClientIDCard" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="SaleDate" Type="DateTime" Precision="3" />
+          <Property Name="ItemQuantitySold" Type="Int32" />
+          <Property Name="ItemPartFK" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserIDFK" Type="Int32" />
           <NavigationProperty Name="User" Relationship="Self.FK_Sales_Users" FromRole="Sales" ToRole="Users" />
           <NavigationProperty Name="Items" Relationship="Self.ItemSales" FromRole="Sales" ToRole="Items" />
         </EntityType>
@@ -266,12 +266,12 @@
             <PropertyRef Name="SupplierID" />
           </Key>
           <Property Name="SupplierID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SupplierName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SupplierName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="SupplierProductsType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="SupplierContact" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SupplierContact" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="SupplierEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="SupplierExperience" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Items" Relationship="Model.FK_Items_Suppliers" FromRole="Supplier" ToRole="Item" />
+          <Property Name="SupplierExperience" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Items" Relationship="Self.FK_Items_Suppliers" FromRole="Suppliers" ToRole="Items" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -285,35 +285,47 @@
         </EntityType>
         <EntityType Name="User">
           <Key>
-            <PropertyRef Name="IDNumber" />
+            <PropertyRef Name="UserID" />
           </Key>
-          <Property Name="IDNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Contact" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="UserType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ResetPasswordCode" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Salt" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="IDCard" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Surname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Contact" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="UserType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ResetPasswordCode" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Sales" Relationship="Self.FK_Sales_Users" FromRole="Users" ToRole="Sales" />
         </EntityType>
         <EntityType Name="Vehicle">
           <Key>
             <PropertyRef Name="VehicleID" />
           </Key>
-          <Property Name="VehicleID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="VehicleMake" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="VehicleModel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="VehicleModelYear" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="VehicleID" Type="Int32" Nullable="false" />
+          <Property Name="VehicleMake" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="VehicleModel" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="VehicleModelYear" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Items" Relationship="Self.ItemsVehicles" FromRole="Vehicles" ToRole="Items" />
         </EntityType>
+        <Association Name="FK_Items_Suppliers">
+          <End Role="Suppliers" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="Items" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="SupplierID" />
+            </Principal>
+            <Dependent Role="Items">
+              <PropertyRef Name="ItemSupplierFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Sales_Users">
           <End Role="Users" Type="Self.User" Multiplicity="0..1" />
           <End Role="Sales" Type="Self.Sale" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
-              <PropertyRef Name="IDNumber" />
+              <PropertyRef Name="UserID" />
             </Principal>
             <Dependent Role="Sales">
               <PropertyRef Name="UserIDFK" />
@@ -328,13 +340,17 @@
           <End Role="Items" Type="Self.Item" Multiplicity="*" />
           <End Role="Vehicles" Type="Self.Vehicle" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="EntitiesAPSCS" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Items" EntityType="Self.Item" />
           <EntitySet Name="Sales" EntityType="Self.Sale" />
           <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="Vehicles" EntityType="Self.Vehicle" />
+          <AssociationSet Name="FK_Items_Suppliers" Association="Self.FK_Items_Suppliers">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="Items" EntitySet="Items" />
+          </AssociationSet>
           <AssociationSet Name="FK_Sales_Users" Association="Self.FK_Sales_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Sales" EntitySet="Sales" />
@@ -346,10 +362,6 @@
           <AssociationSet Name="ItemsVehicles" Association="Self.ItemsVehicles">
             <End Role="Items" EntitySet="Items" />
             <End Role="Vehicles" EntitySet="Vehicles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Items_Suppliers" Association="Model.FK_Items_Suppliers">
-            <End Role="Supplier" EntitySet="Suppliers" />
-            <End Role="Item" EntitySet="Items" />
           </AssociationSet>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -367,11 +379,11 @@
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(Model.sp_helpdiagramdefinition_Result)">
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(ModelAPSCS.sp_helpdiagramdefinition_Result)">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(Model.sp_helpdiagrams_Result)">
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(ModelAPSCS.sp_helpdiagrams_Result)">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -382,18 +394,6 @@
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
-        <Association Name="FK_Items_Suppliers">
-          <End Type="Model.Supplier" Role="Supplier" Multiplicity="1" />
-          <End Type="Model.Item" Role="Item" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Supplier">
-              <PropertyRef Name="SupplierID" />
-            </Principal>
-            <Dependent Role="Item">
-              <PropertyRef Name="ItemSupplierFK" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
           <Property Type="Binary" Name="definition" Nullable="true" />
@@ -410,11 +410,12 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="ModelAPSCSStoreContainer" CdmEntityContainer="EntitiesAPSCS">
           <EntitySetMapping Name="Items">
-            <EntityTypeMapping TypeName="Model.Item">
+            <EntityTypeMapping TypeName="ModelAPSCS.Item">
               <MappingFragment StoreEntitySet="Items">
-                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="ItemPart" ColumnName="ItemPart" />
                 <ScalarProperty Name="ItemDescription" ColumnName="ItemDescription" />
                 <ScalarProperty Name="ItemCategory" ColumnName="ItemCategory" />
                 <ScalarProperty Name="ItemCompatability" ColumnName="ItemCompatability" />
@@ -425,21 +426,20 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Sales">
-            <EntityTypeMapping TypeName="Model.Sale">
+            <EntityTypeMapping TypeName="ModelAPSCS.Sale">
               <MappingFragment StoreEntitySet="Sales">
                 <ScalarProperty Name="SaleID" ColumnName="SaleID" />
                 <ScalarProperty Name="ClientName" ColumnName="ClientName" />
-                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="ClientIDCard" ColumnName="ClientIDCard" />
                 <ScalarProperty Name="SaleDate" ColumnName="SaleDate" />
-                <ScalarProperty Name="SaleTime" ColumnName="SaleTime" />
                 <ScalarProperty Name="ItemQuantitySold" ColumnName="ItemQuantitySold" />
-                <ScalarProperty Name="ItemCodeFK" ColumnName="ItemCodeFK" />
+                <ScalarProperty Name="ItemPartFK" ColumnName="ItemPartFK" />
                 <ScalarProperty Name="UserIDFK" ColumnName="UserIDFK" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Suppliers">
-            <EntityTypeMapping TypeName="Model.Supplier">
+            <EntityTypeMapping TypeName="ModelAPSCS.Supplier">
               <MappingFragment StoreEntitySet="Suppliers">
                 <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
                 <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
@@ -451,7 +451,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="Model.sysdiagram">
+            <EntityTypeMapping TypeName="ModelAPSCS.sysdiagram">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
@@ -462,9 +462,10 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="Model.User">
+            <EntityTypeMapping TypeName="ModelAPSCS.User">
               <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="IDNumber" ColumnName="IDNumber" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="IDCard" ColumnName="IDCard" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Surname" ColumnName="Surname" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
@@ -472,12 +473,11 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="UserType" ColumnName="UserType" />
                 <ScalarProperty Name="ResetPasswordCode" ColumnName="ResetPasswordCode" />
-                <ScalarProperty Name="Salt" ColumnName="Salt" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Vehicles">
-            <EntityTypeMapping TypeName="Model.Vehicle">
+            <EntityTypeMapping TypeName="ModelAPSCS.Vehicle">
               <MappingFragment StoreEntitySet="Vehicles">
                 <ScalarProperty Name="VehicleID" ColumnName="VehicleID" />
                 <ScalarProperty Name="VehicleMake" ColumnName="VehicleMake" />
@@ -486,36 +486,36 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="ItemSales" TypeName="Model.ItemSales" StoreEntitySet="ItemSales">
+          <AssociationSetMapping Name="ItemSales" TypeName="ModelAPSCS.ItemSales" StoreEntitySet="ItemSales">
             <EndProperty Name="Items">
-              <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+              <ScalarProperty Name="ItemID" ColumnName="ItemID" />
             </EndProperty>
             <EndProperty Name="Sales">
               <ScalarProperty Name="SaleID" ColumnName="SaleID" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="ItemsVehicles" TypeName="Model.ItemsVehicles" StoreEntitySet="ItemsVehicles">
+          <AssociationSetMapping Name="ItemsVehicles" TypeName="ModelAPSCS.ItemsVehicles" StoreEntitySet="ItemsVehicles">
             <EndProperty Name="Items">
-              <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+              <ScalarProperty Name="ItemID" ColumnName="ItemID" />
             </EndProperty>
             <EndProperty Name="Vehicles">
               <ScalarProperty Name="VehicleID" ColumnName="VehicleID" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Model.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Model.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Model.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Model.Store.sp_helpdiagramdefinition">
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="ModelAPSCS.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="ModelAPSCS.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="ModelAPSCS.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="ModelAPSCS.Store.sp_helpdiagramdefinition">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="Model.sp_helpdiagramdefinition_Result">
+              <ComplexTypeMapping TypeName="ModelAPSCS.sp_helpdiagramdefinition_Result">
                 <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="definition" ColumnName="definition" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Model.Store.sp_helpdiagrams">
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="ModelAPSCS.Store.sp_helpdiagrams">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="Model.sp_helpdiagrams_Result">
+              <ComplexTypeMapping TypeName="ModelAPSCS.sp_helpdiagrams_Result">
                 <ScalarProperty Name="Database" ColumnName="Database" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -524,8 +524,8 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Model.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Model.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="ModelAPSCS.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="ModelAPSCS.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

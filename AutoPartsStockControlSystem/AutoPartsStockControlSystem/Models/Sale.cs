@@ -22,12 +22,11 @@ namespace AutoPartsStockControlSystem.Models
     
         public int SaleID { get; set; }
         public string ClientName { get; set; }
-        public string ClientID { get; set; }
-        public System.DateTime SaleDate { get; set; }
-        public System.TimeSpan SaleTime { get; set; }
-        public int ItemQuantitySold { get; set; }
-        public string ItemCodeFK { get; set; }
-        public string UserIDFK { get; set; }
+        public string ClientIDCard { get; set; }
+        public Nullable<System.DateTime> SaleDate { get; set; }
+        public Nullable<int> ItemQuantitySold { get; set; }
+        public string ItemPartFK { get; set; }
+        public Nullable<int> UserIDFK { get; set; }
     
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

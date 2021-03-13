@@ -40,6 +40,18 @@ namespace AutoPartsStockControlSystem.Controllers
         }
 
 
+        public ActionResult UserSendMessage()
+        {
+            return View();
+        }
+
+        public ActionResult SendEmailConfig()
+        {
+            return View();
+        }
+
+
+        #region UserSuppliers
         public ActionResult UserSuppliers()
         {
             return View();
@@ -48,7 +60,7 @@ namespace AutoPartsStockControlSystem.Controllers
 
         public ActionResult GetData()
         {
-            using (Entities db = new Entities())
+            using (EntitiesAPSCS db = new EntitiesAPSCS())
             {
                 db.Configuration.LazyLoadingEnabled = false;
                 List<Supplier> empList = db.Suppliers.ToList<Supplier>();
@@ -64,7 +76,7 @@ namespace AutoPartsStockControlSystem.Controllers
                 return View(new Supplier());
             else
             {
-                using (Entities db = new Entities())
+                using (EntitiesAPSCS db = new EntitiesAPSCS())
                 {
                     return View(db.Suppliers.Where(x => x.SupplierID == id).FirstOrDefault<Supplier>());
                 }
@@ -74,7 +86,7 @@ namespace AutoPartsStockControlSystem.Controllers
         [HttpPost]
         public ActionResult AddOrEdit(Supplier emp)
         {
-            using (Entities db = new Entities())
+            using (EntitiesAPSCS db = new EntitiesAPSCS())
             {
                 if (emp.SupplierID == 0)
                 {
@@ -96,7 +108,7 @@ namespace AutoPartsStockControlSystem.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            using (Entities db = new Entities())
+            using (EntitiesAPSCS db = new EntitiesAPSCS())
             {
                 Supplier emp = db.Suppliers.Where(x => x.SupplierID == id).FirstOrDefault<Supplier>();
                 db.Suppliers.Remove(emp);
@@ -106,20 +118,12 @@ namespace AutoPartsStockControlSystem.Controllers
         }
 
 
-        public ActionResult UserSendMessage()
-        {
-            return View();
-        }
-
-        public ActionResult SendEmailConfig()
-        {
-            return View();
-        }
+        #endregion
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-      
-        
+
+
 
 
     }

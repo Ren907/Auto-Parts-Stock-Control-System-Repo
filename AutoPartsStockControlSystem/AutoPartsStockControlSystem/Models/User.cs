@@ -20,7 +20,8 @@ namespace AutoPartsStockControlSystem.Models
             this.Sales = new HashSet<Sale>();
         }
     
-        public string IDNumber { get; set; }
+        public int UserID { get; set; }
+        public string IDCard { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
@@ -28,7 +29,6 @@ namespace AutoPartsStockControlSystem.Models
         public string Password { get; set; }
         public string UserType { get; set; }
         public string ResetPasswordCode { get; set; }
-        public string Salt { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Sale> Sales { get; set; }

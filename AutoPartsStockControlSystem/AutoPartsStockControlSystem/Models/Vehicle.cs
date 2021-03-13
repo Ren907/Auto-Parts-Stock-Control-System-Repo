@@ -20,7 +20,7 @@ namespace AutoPartsStockControlSystem.Models
             this.Items = new HashSet<Item>();
         }
     
-        public string VehicleID { get; set; }
+        public int VehicleID { get; set; }
         public string VehicleMake { get; set; }
         public string VehicleModel { get; set; }
         public string VehicleModelYear { get; set; }

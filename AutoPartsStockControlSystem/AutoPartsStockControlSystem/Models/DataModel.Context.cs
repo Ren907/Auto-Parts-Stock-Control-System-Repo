@@ -15,10 +15,10 @@ namespace AutoPartsStockControlSystem.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class Entities : DbContext
+    public partial class EntitiesAPSCS : DbContext
     {
-        public Entities()
-            : base("name=Entities")
+        public EntitiesAPSCS()
+            : base("name=EntitiesAPSCS")
         {
         }
     

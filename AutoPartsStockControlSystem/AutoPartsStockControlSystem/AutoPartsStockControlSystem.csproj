@@ -357,10 +357,13 @@
     <Content Include="Views\AdminPage\SendEmailConfig.cshtml" />
     <Content Include="Views\Shared\_Layout_DataTable.cshtml" />
     <Content Include="Views\AdminPage\AddOrEditSuppliers.cshtml" />
-    <Content Include="Views\AdminPage\AddOrEditUsers.cshtml" />
+    <Content Include="Views\AdminPage\AddUsers.cshtml" />
+    <Content Include="Views\AdminPage\EditUsers.cshtml" />
     <None Include="Views\Shared\_Layout_ResetPassword.cshtml" />
     <Content Include="Views\UserPage\SendEmailConfig.cshtml" />
-    <Content Include="Views\UserPage\AddOrEdit.cshtml" />
+    <Content Include="Views\UserPage\AddOrEditSupplier.cshtml" />
+    <Content Include="Views\UserPage\AddItem.cshtml" />
+    <Content Include="Views\UserPage\EditItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

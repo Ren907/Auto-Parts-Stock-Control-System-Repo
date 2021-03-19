@@ -1,8 +1,96 @@
-﻿
+﻿@model AutoPartsStockControlSystem.Models.UserClassModel
 @{
     ViewBag.Title = "UserUpdateStock";
     Layout = "~/Views/Shared/_Layout_User.cshtml";
 }
 
-<h2>UpdateStock</h2>
 
+<h3>UpdateStock</h3>
+<br />
+
+@using (Html.BeginForm("UserUpdateStock", "UserPage", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+{
+ 
+
+    <div class="form-group">
+
+
+        @Html.LabelFor(model => model.ItemPart, "Part Number", new { @class = "control-label" })
+        @Html.EditorFor(model => model.ItemPart, new { htmlAttributes = new { @class = "form-control",  placeholder = "Please Enter Part Number", @Value = "" } })
+        @Html.ValidationMessageFor(model => model.ItemPart, "", new { @class = "text-danger" })
+
+
+
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ItemQuantity, "Quantity In", new { @class = "control-label" })
+        @Html.EditorFor(model => model.ItemQuantity, new { htmlAttributes = new { @class = "form-control", placeholder = "Please Enter Quantity In", @Value = "" } })
+        @Html.ValidationMessageFor(model => model.ItemQuantity, "", new { @class = "text-danger" })
+
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Update Stock" class="btn btn-success" />
+
+    </div>
+}
+<br />
+<br />
+<h4>Low Stock Items:</h4>
+<br />
+<table id="LowStockTable" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th>Item Part Number</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Quantity</th>
+
+        </tr>
+    </thead>
+</table>
+
+<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+@section scripts{
+
+    <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+
+    <script>
+        var Popup, dataTable;
+        $(document).ready(function () {
+            dataTable = $("#LowStockTable").DataTable({
+
+                "ajax": {
+                    "url": "/UserPage/GetDataLowStockTable",
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "ItemPart" },
+                    { "data": "ItemDescription" },
+                    { "data": "ItemCategory" },
+                    { "data": "ItemQuantity" },],
+
+                "language": {
+
+                    "emptyTable": "No Records Found!"
+                }
+            });
+        });
+
+    </script>
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+        </script>
+    }
+}

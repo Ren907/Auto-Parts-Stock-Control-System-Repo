@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net.Mime;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -62,7 +63,7 @@ namespace AutoPartsStockControlSystem.Controllers
 
 
         [HttpGet]
-        public ActionResult AddOrEditUsers(int id = 0)
+        public ActionResult AddUsers(int id = 0)
         {
             if (id == 0)
                 return View(new User());
@@ -79,27 +80,76 @@ namespace AutoPartsStockControlSystem.Controllers
 
 
         [HttpPost]
-        public ActionResult AddOrEditUsers(User usr)
+        public ActionResult AddUsers(User usr)
         {
           
             using (EntitiesAPSCS db = new EntitiesAPSCS())
             {
                 if (usr.UserID == 0)
                 {
-                    db.Users.Add(usr);
-                    db.SaveChanges();
-                    return Json(new { success = true, message = "Saved Successfully" }, JsonRequestBehavior.AllowGet);
+                    if (db.Users.Any(x => x.IDCard == usr.IDCard))
+                    {
+
+                        return Json(new { success = false,  message = "IDCard Number Already Exist!"}, JsonRequestBehavior.AllowGet);
+                       
+                    }
+
+                    else
+                    {
+
+                        db.Users.Add(usr);
+                        db.SaveChanges();
+                        return Json(new { success = true, message = "Saved Successfully" }, JsonRequestBehavior.AllowGet);
+
+                    }
+
                 }
                 else
                 {
-                    db.Entry(usr).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return Json(new { success = true, message = "Updated Successfully" }, JsonRequestBehavior.AllowGet);
+
+                        db.Entry(usr).State = EntityState.Modified;
+                        db.SaveChanges();
+                        return Json(new { success = true, message = "Updated Successfully" }, JsonRequestBehavior.AllowGet); 
                 }
             }
 
 
         }
+
+
+        [HttpGet]
+        public ActionResult EditUsers(int id = 0)
+        {
+            if (id == 0)
+                return View(new User());
+            else
+            {
+                using (EntitiesAPSCS db = new EntitiesAPSCS())
+                {
+                    return View(db.Users.Where(x => x.UserID == id).FirstOrDefault<User>());
+
+                }
+            }
+        }
+
+
+
+        [HttpPost]
+        public ActionResult EditUsers(User usr)
+        {
+
+            using (EntitiesAPSCS db = new EntitiesAPSCS())
+            {
+
+                    db.Entry(usr).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return Json(new { success = true, message = "Updated Successfully" }, JsonRequestBehavior.AllowGet);
+                
+            }
+
+
+        }
+
 
         [HttpPost]
         public ActionResult DeleteUsers(int id)
@@ -112,7 +162,6 @@ namespace AutoPartsStockControlSystem.Controllers
                 return Json(new { success = true, message = "Deleted Successfully" }, JsonRequestBehavior.AllowGet);
             }
         }
-
 
 
         #endregion

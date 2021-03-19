@@ -11,7 +11,9 @@ namespace AutoPartsStockControlSystem.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
+
     public partial class Item
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,13 +22,21 @@ namespace AutoPartsStockControlSystem.Models
             this.Sales = new HashSet<Sale>();
             this.Vehicles = new HashSet<Vehicle>();
         }
-    
+
+
+       
         public int ItemID { get; set; }
+
+
+        [Display(Name = "Part Number")]
+        [Required]
         public string ItemPart { get; set; }
         public string ItemDescription { get; set; }
         public string ItemCategory { get; set; }
         public string ItemCompatability { get; set; }
         public Nullable<decimal> ItemPrice { get; set; }
+        [Display(Name = "Item Quantity")]
+        [Required]
         public Nullable<int> ItemQuantity { get; set; }
         public Nullable<int> ItemSupplierFK { get; set; }
     
@@ -35,5 +45,6 @@ namespace AutoPartsStockControlSystem.Models
         public virtual ICollection<Sale> Sales { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Vehicle> Vehicles { get; set; }
+        
     }
 }

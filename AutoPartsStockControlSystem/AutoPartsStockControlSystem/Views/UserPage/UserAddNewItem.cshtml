@@ -4,5 +4,160 @@
     Layout = "~/Views/Shared/_Layout_User.cshtml";
 }
 
-<h2>AddNewItem</h2>
+<h3>New Items</h3>
+<br />
+<a class="btn btn-success" style="margin-bottom:10px" onclick="PopupForm('@Url.Action("AddItem","UserPage")')"><i class="fa fa-plus"></i> Add New</a>
+<br />
+<br />
 
+<table id="ItemsTable" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th>Item Part Number</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Compatability</th>
+            <th>Price</th>
+
+            <th>Quantity</th>
+            <th></th>
+        </tr>
+    </thead>
+</table>
+
+<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+@section scripts{
+
+    <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+
+    <script>
+        var Popup, dataTable;
+        $(document).ready(function () {
+            dataTable = $("#ItemsTable").DataTable({
+
+                "ajax": {
+                    "url": "/UserPage/GetDataItem",
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "ItemPart" },
+                    { "data": "ItemDescription" },
+                    { "data": "ItemCategory" },
+                    { "data": "ItemCompatability" },
+                    { "data": "ItemPrice" },
+                    { "data": "ItemQuantity" },
+                    {
+                       "data":"ItemID" , "render" : function (data) {
+                        return "<a class='btn btn-default btn-sm' onclick=PopupForm('@Url.Action("EditItem", "UserPage")/" + data + "')><i class='fa fa-pencil'></i> Edit</a><a class='btn btn-danger btn-sm' style='margin-left:5px' onclick=Delete("+data+")><i class='fa fa-trash'></i> Delete</a>";
+                    },
+                        "orderable": false,
+                        "searchable":false,
+                        "width":"150px"
+                    }
+
+                ],
+                "language": {
+
+                    "emptyTable" : "No Records Found, Add new Records by using the <b>Add New</b> Button"
+                }
+            });
+        });
+
+        function PopupForm(url) {
+            var formDiv = $('<div/>');
+            $.get(url)
+                .done(function (response) {
+                    formDiv.html(response);
+
+                    Popup = formDiv.dialog({
+                        autoOpen: true,
+                        resizable: false,
+                        title: 'Please Enter Details',
+                        height: 600,
+                        width: 600,
+                        close: function () {
+                            Popup.dialog('destroy').remove();
+                        }
+
+                    });
+                });
+        }
+
+        function SubmitForm(form) {
+            $.validator.unobtrusive.parse(form);
+            if($(form).valid()){
+                $.ajax({
+                    type : "POST",
+                    url : form.action,
+                    data: $(form).serialize(),
+
+                    success: function (data) {
+                        if (data.success) {
+                            Popup.dialog('close');
+                            dataTable.ajax.reload();
+
+
+                            $.notify(data.message, {
+                                globalPosition: "top center",
+                                className: "success"
+                            })
+
+
+                        }
+
+                        else {
+
+                            $.notify(data.message, {
+                                globalPosition: "top center",
+                                className: "error"
+                            })
+
+
+                        }
+
+                    },
+
+
+
+                });
+            }
+            return false;
+        }
+
+
+
+
+        function Delete(id) {
+            if (confirm('Are You Sure to Delete this Record ?'))
+            {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("DeleteItem", "UserPage")/' + id,
+                    success: function (data) {
+                        if (data.success)
+                        {
+                            dataTable.ajax.reload();
+
+                            $.notify(data.message, {
+                                globalPosition: "top center",
+                                className: "success"
+                            })
+
+                        }
+                    }
+
+
+
+                });
+            }
+        }
+
+
+
+
+    </script>
+}

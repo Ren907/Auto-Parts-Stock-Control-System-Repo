@@ -19,9 +19,11 @@ namespace AutoPartsStockControlSystem.Models
         public string SupplierProductsType { get; set; }
 
         [Display(Name = "Contact")]
+        [Phone]
         public string SupplierContact { get; set; }
 
         [Display(Name = "Email")]
+        [EmailAddress]
         public string SupplierEmail { get; set; }
 
         [Display(Name = "Supplier Experience")]
@@ -46,7 +48,9 @@ namespace AutoPartsStockControlSystem.Models
         [EmailAddress]
         public string Email { get; set; }
 
+        
         [Display(Name = "Contact")]
+        [Phone]
         public string Contact { get; set; }
 
         [Display(Name = "Password")]

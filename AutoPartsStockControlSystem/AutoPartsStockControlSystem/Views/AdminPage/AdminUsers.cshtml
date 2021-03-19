@@ -6,7 +6,7 @@
 
 <h3>Users</h3>
 <br />
-<a class="btn btn-success" style="margin-bottom:10px" onclick="PopupForm('@Url.Action("AddOrEditUsers","AdminPage")')"><i class="fa fa-plus"></i> Add New</a>
+<a class="btn btn-success" style="margin-bottom:10px" onclick="PopupForm('@Url.Action("AddUsers","AdminPage")')"><i class="fa fa-plus"></i> Add New</a>
 <br />
 <br />
 
@@ -18,7 +18,7 @@
             <th>Surname</th>
             <th>Email</th>
             <th>Contact</th>
-            
+
             <th>User Type</th>
             <th></th>
         </tr>
@@ -32,7 +32,7 @@
 
     <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
-
+    
     <script>
         var Popup, dataTable;
         $(document).ready(function () {
@@ -48,11 +48,11 @@
                     { "data": "Name" },
                     { "data": "Surname" },
                     { "data": "Email" },
-                    { "data": "Contact" },                   
+                    { "data": "Contact" },
                     { "data": "UserType" },
                     {
                        "data":"UserID" , "render" : function (data) {
-                        return "<a class='btn btn-default btn-sm' onclick=PopupForm('@Url.Action("AddOrEditUsers", "AdminPage")/" + data + "')><i class='fa fa-pencil'></i> Edit</a><a class='btn btn-danger btn-sm' style='margin-left:5px' onclick=Delete("+data+")><i class='fa fa-trash'></i> Delete</a>";
+                        return "<a class='btn btn-default btn-sm' onclick=PopupForm('@Url.Action("EditUsers", "AdminPage")/" + data + "')><i class='fa fa-pencil'></i> Edit</a><a class='btn btn-danger btn-sm' style='margin-left:5px' onclick=Delete("+data+")><i class='fa fa-trash'></i> Delete</a>";
                     },
                         "orderable": false,
                         "searchable":false,
@@ -77,8 +77,8 @@
                         autoOpen: true,
                         resizable: false,
                         title: 'Please Enter Details',
-                        height: 500,
-                        width: 700,
+                        height: 600,
+                        width: 600,
                         close: function () {
                             Popup.dialog('destroy').remove();
                         }
@@ -93,24 +93,43 @@
                 $.ajax({
                     type : "POST",
                     url : form.action,
-                    data : $(form).serialize(),
-                    success : function (data) {
-                        if(data.success)
-                        {
+                    data: $(form).serialize(),
+
+                    success: function (data) {
+                        if (data.success) {
                             Popup.dialog('close');
                             dataTable.ajax.reload();
 
-                            $.notify(data.message,{
-                                globalPosition :"top center",
-                                className : "success"
+
+                            $.notify(data.message, {
+                                globalPosition: "top center",
+                                className: "success"
                             })
 
+
                         }
-                    }
+
+                        else {
+
+                            $.notify(data.message, {
+                                globalPosition: "top center",
+                                className: "error"
+                            })
+
+
+                        }
+
+                    },
+                   
+
+
                 });
             }
             return false;
         }
+
+
+  
 
         function Delete(id) {
             if (confirm('Are You Sure to Delete this Record ?'))
@@ -131,8 +150,14 @@
                         }
                     }
 
+
+                    
                 });
             }
         }
+
+
+
+
     </script>
 }

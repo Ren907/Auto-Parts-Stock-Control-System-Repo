@@ -1,0 +1,58 @@
+﻿@model AutoPartsStockControlSystem.Models.Item
+@{
+    /**/
+
+    /**/
+
+    Layout = "~/Views/Shared/_Layout_DataTable.cshtml";
+}
+
+@using (Html.BeginForm("AddItem", "UserPage", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+{
+    @Html.HiddenFor(model => model.ItemID)
+
+<div class="form-group">
+    @Html.HiddenFor(model => model.ItemPart)
+
+</div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ItemDescription, "Item Description", new { @class = "control-label" })
+        @Html.EditorFor(model => model.ItemDescription, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+        @Html.ValidationMessageFor(model => model.ItemDescription, "", new { @class = "text-danger" })
+
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ItemCategory, "Item Category", new { @class = "control-label" })
+        @Html.EditorFor(model => model.ItemCategory, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+        @Html.ValidationMessageFor(model => model.ItemCategory, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ItemCompatability, "Item Compatability", new { @class = "control-label" })
+        @Html.EditorFor(model => model.ItemCompatability, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+        @Html.ValidationMessageFor(model => model.ItemCompatability, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ItemPrice, "Item Price", new { @class = "control-label" })
+        @Html.EditorFor(model => model.ItemPrice, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+        @Html.ValidationMessageFor(model => model.ItemPrice, "", new { @class = "text-danger" })
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ItemQuantity, "Item Quantity", new { @class = "control-label" })
+        @Html.EditorFor(model => model.ItemQuantity, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+        @Html.ValidationMessageFor(model => model.ItemQuantity, "", new { @class = "text-danger" })
+    </div>
+
+
+    <div class="form-group">
+        @Html.HiddenFor(model => model.ItemSupplierFK)
+    </div>
+
+
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-primary" />
+        <input type="reset" value="Reset" class="btn" />
+    </div>
+}

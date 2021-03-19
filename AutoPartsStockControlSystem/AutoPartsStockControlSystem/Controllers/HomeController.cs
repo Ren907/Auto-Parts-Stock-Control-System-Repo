@@ -29,8 +29,7 @@ namespace AutoPartsStockControlSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model)
         {
-
-            
+           
             string HashedPassword = GenerateSHA256Hash(model.Password);
 
             var checkLoginAdmin = db.Users.Where(x => x.Email.Equals(model.Email) && x.Password.Equals(HashedPassword) && x.UserType.Equals("Admin")).FirstOrDefault();
@@ -40,14 +39,11 @@ namespace AutoPartsStockControlSystem.Controllers
 
             if (checkLoginAdmin != null)
             {
-             
-
 
                 Session["Email"] = model.Email.ToString();
                 Session["Password"] = model.Password.ToString();
                 return RedirectToAction("AdminDashboard", "AdminPage");
             }
-
 
             else if (checkLoginUser != null)
             {
@@ -59,12 +55,8 @@ namespace AutoPartsStockControlSystem.Controllers
 
             else
             {
-
-                
                 ViewBag.Notification = "Wrong E-Mail or Password";
-                ViewBag.EmailNotification = "Please Enter Email Address";
-                ViewBag.PasswordNotification = "Please Enter Password ";
-               
+
             }
             return View();
         }
@@ -77,6 +69,7 @@ namespace AutoPartsStockControlSystem.Controllers
 
         public ActionResult Logout()
         {
+            
             Session.Clear();
             return RedirectToAction("Login", "Home");
         }

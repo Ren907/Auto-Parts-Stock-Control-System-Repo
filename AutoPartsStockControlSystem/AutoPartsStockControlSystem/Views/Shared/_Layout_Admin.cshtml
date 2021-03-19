@@ -35,7 +35,8 @@
                     @if (Session["Email"] != null)
                     {
                         <li><p style="color:#fff;margin-top:15px;"> Hello @Session["Email"] </p></li>
-                        <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
+                        <li>@Html.ActionLink("Logout", "Logout", "Home", null, new { onclick = "return confirm('Are you sure to Log Out?')" })</li>
+
                     }
 
                     else

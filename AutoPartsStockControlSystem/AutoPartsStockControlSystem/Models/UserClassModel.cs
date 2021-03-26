@@ -29,25 +29,25 @@ namespace AutoPartsStockControlSystem.Models
         public string SupplierExperience { get; set; }
 
         //Items
-        //public IEnumerable<SelectListItem> PartsList { get; set; }
+        [Required]
         public int ItemID { get; set; }
         [Required]
         public string ItemPart { get; set; }
+        [RegularExpression("^[-_, A-Za-z]+$", ErrorMessage = "Please enter only Alphabetical Characters!")]
         public string ItemDescription { get; set; }
         public string ItemCategory { get; set; }
-        public string ItemCompatability { get; set; }
-        public Nullable<decimal> ItemPrice { get; set; }
         [Required]
         public Nullable<int> ItemQuantity { get; set; }
-        public Nullable<int> ItemSupplierFK { get; set; }
+        public Nullable<decimal> ItemPrice { get; set; }
+        [RegularExpression("^[- A-Za-z]+$", ErrorMessage = "Please enter only Alphabetical Characters!")]
+        public string VehicleMake { get; set; }
+        [RegularExpression("^[- A-Za-z]+$", ErrorMessage = "Please enter only Alphabetical Characters!")]
+        public string VehicleModel { get; set; }
+        [RegularExpression("^[-_, 0-9]*$", ErrorMessage = "Please enter only year Range! example:(2020 - 2021)")]
+        public string VehicleModelYearRange { get; set; }
+        public string PartCompatability { get; set; }
 
-        public virtual Supplier Supplier { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Sale> Sales { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Vehicle> Vehicles { get; set; }
-       
 
     }
 

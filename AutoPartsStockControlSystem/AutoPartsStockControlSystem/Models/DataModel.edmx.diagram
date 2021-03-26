@@ -4,17 +4,11 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="eeb53cd7c9ea4721ab63af8498c93045" Name="Diagram1">
-        <EntityTypeShape EntityType="ModelAPSCS.Item" Width="1.5" PointX="3" PointY="2.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ModelAPSCS.Sale" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ModelAPSCS.Supplier" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ModelAPSCS.sysdiagram" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ModelAPSCS.User" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ModelAPSCS.Vehicle" Width="1.5" PointX="5.25" PointY="6.375" IsExpanded="true" />
-        <AssociationConnector Association="ModelAPSCS.FK_Items_Suppliers" ManuallyRouted="false" />
-        <AssociationConnector Association="ModelAPSCS.FK_Sales_Users" ManuallyRouted="false" />
-        <AssociationConnector Association="ModelAPSCS.ItemSales" ManuallyRouted="false" />
-        <AssociationConnector Association="ModelAPSCS.ItemsVehicles" ManuallyRouted="false" />
+      <Diagram DiagramId="3b7c140cac634cf1b5b3631b435e3fd5" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.Item" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Sale" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Supplier" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.User" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

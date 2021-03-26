@@ -14,22 +14,12 @@ namespace AutoPartsStockControlSystem.Models
     
     public partial class Sale
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Sale()
-        {
-            this.Items = new HashSet<Item>();
-        }
-    
         public int SaleID { get; set; }
         public string ClientName { get; set; }
         public string ClientIDCard { get; set; }
         public Nullable<System.DateTime> SaleDate { get; set; }
-        public Nullable<int> ItemQuantitySold { get; set; }
-        public string ItemPartFK { get; set; }
-        public Nullable<int> UserIDFK { get; set; }
-    
-        public virtual User User { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Item> Items { get; set; }
+        public Nullable<int> SaleQuantity { get; set; }
+        public string SalePart { get; set; }
+        public string SaleDescription { get; set; }
     }
 }

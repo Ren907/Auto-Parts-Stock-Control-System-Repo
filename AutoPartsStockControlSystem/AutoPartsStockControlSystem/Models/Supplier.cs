@@ -14,20 +14,11 @@ namespace AutoPartsStockControlSystem.Models
     
     public partial class Supplier
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Supplier()
-        {
-            this.Items = new HashSet<Item>();
-        }
-    
         public int SupplierID { get; set; }
         public string SupplierName { get; set; }
         public string SupplierProductsType { get; set; }
         public string SupplierContact { get; set; }
         public string SupplierEmail { get; set; }
         public string SupplierExperience { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Item> Items { get; set; }
     }
 }

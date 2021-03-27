@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="DModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Items">
           <Key>
             <PropertyRef Name="ItemID" />
@@ -20,17 +20,19 @@
           <Property Name="VehicleModelYearRange" Type="varchar" MaxLength="30" />
           <Property Name="PartCompatability" Type="varchar" MaxLength="30" />
         </EntityType>
-        <EntityType Name="Sales">
+        <EntityType Name="StockOut">
           <Key>
-            <PropertyRef Name="SaleID" />
+            <PropertyRef Name="StockOutID" />
           </Key>
-          <Property Name="SaleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StockOutID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ClientName" Type="varchar" MaxLength="30" />
+          <Property Name="ClientSurname" Type="nchar" MaxLength="10" />
           <Property Name="ClientIDCard" Type="varchar" MaxLength="30" />
-          <Property Name="SaleDate" Type="datetime" />
-          <Property Name="SaleQuantity" Type="int" />
-          <Property Name="SalePart" Type="varchar" MaxLength="50" />
-          <Property Name="SaleDescription" Type="varchar" MaxLength="50" />
+          <Property Name="ClientContact" Type="varchar" MaxLength="50" />
+          <Property Name="StockOutPart" Type="varchar" MaxLength="50" />
+          <Property Name="StockOutDescription" Type="varchar" MaxLength="50" />
+          <Property Name="StockOutQuantity" Type="int" />
+          <Property Name="StockOutDate" Type="varchar" MaxLength="30" />
         </EntityType>
         <EntityType Name="Suppliers">
           <Key>
@@ -57,9 +59,9 @@
           <Property Name="UserType" Type="varchar" MaxLength="20" />
           <Property Name="ResetPasswordCode" Type="varchar" MaxLength="300" />
         </EntityType>
-        <EntityContainer Name="ModelStoreContainer">
+        <EntityContainer Name="DModelStoreContainer">
           <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Sales" EntityType="Self.Sales" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockOut" EntityType="Self.StockOut" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
@@ -67,7 +69,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="DModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Item">
           <Key>
             <PropertyRef Name="ItemID" />
@@ -83,17 +85,19 @@
           <Property Name="VehicleModelYearRange" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="PartCompatability" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="Sale">
+        <EntityType Name="StockOut">
           <Key>
-            <PropertyRef Name="SaleID" />
+            <PropertyRef Name="StockOutID" />
           </Key>
-          <Property Name="SaleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StockOutID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ClientName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ClientSurname" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="ClientIDCard" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="SaleDate" Type="DateTime" Precision="3" />
-          <Property Name="SaleQuantity" Type="Int32" />
-          <Property Name="SalePart" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="SaleDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ClientContact" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StockOutPart" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StockOutDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StockOutQuantity" Type="Int32" />
+          <Property Name="StockOutDate" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Supplier">
           <Key>
@@ -122,7 +126,7 @@
         </EntityType>
         <EntityContainer Name="EntitiesAPSCS" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Items" EntityType="Self.Item" />
-          <EntitySet Name="Sales" EntityType="Self.Sale" />
+          <EntitySet Name="StockOuts" EntityType="Self.StockOut" />
           <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
           <EntitySet Name="Users" EntityType="Self.User" />
         </EntityContainer>
@@ -131,9 +135,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="EntitiesAPSCS">
+        <EntityContainerMapping StorageEntityContainer="DModelStoreContainer" CdmEntityContainer="EntitiesAPSCS">
           <EntitySetMapping Name="Items">
-            <EntityTypeMapping TypeName="Model.Item">
+            <EntityTypeMapping TypeName="DModel.Item">
               <MappingFragment StoreEntitySet="Items">
                 <ScalarProperty Name="ItemID" ColumnName="ItemID" />
                 <ScalarProperty Name="ItemPart" ColumnName="ItemPart" />
@@ -148,21 +152,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Sales">
-            <EntityTypeMapping TypeName="Model.Sale">
-              <MappingFragment StoreEntitySet="Sales">
-                <ScalarProperty Name="SaleID" ColumnName="SaleID" />
+          <EntitySetMapping Name="StockOuts">
+            <EntityTypeMapping TypeName="DModel.StockOut">
+              <MappingFragment StoreEntitySet="StockOut">
+                <ScalarProperty Name="StockOutID" ColumnName="StockOutID" />
                 <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="ClientSurname" ColumnName="ClientSurname" />
                 <ScalarProperty Name="ClientIDCard" ColumnName="ClientIDCard" />
-                <ScalarProperty Name="SaleDate" ColumnName="SaleDate" />
-                <ScalarProperty Name="SaleQuantity" ColumnName="SaleQuantity" />
-                <ScalarProperty Name="SalePart" ColumnName="SalePart" />
-                <ScalarProperty Name="SaleDescription" ColumnName="SaleDescription" />
+                <ScalarProperty Name="ClientContact" ColumnName="ClientContact" />
+                <ScalarProperty Name="StockOutPart" ColumnName="StockOutPart" />
+                <ScalarProperty Name="StockOutDescription" ColumnName="StockOutDescription" />
+                <ScalarProperty Name="StockOutQuantity" ColumnName="StockOutQuantity" />
+                <ScalarProperty Name="StockOutDate" ColumnName="StockOutDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Suppliers">
-            <EntityTypeMapping TypeName="Model.Supplier">
+            <EntityTypeMapping TypeName="DModel.Supplier">
               <MappingFragment StoreEntitySet="Suppliers">
                 <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
                 <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
@@ -174,7 +180,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="Model.User">
+            <EntityTypeMapping TypeName="DModel.User">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="IDCard" ColumnName="IDCard" />

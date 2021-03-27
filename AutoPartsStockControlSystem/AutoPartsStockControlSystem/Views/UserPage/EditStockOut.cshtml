@@ -1,0 +1,68 @@
+﻿@model AutoPartsStockControlSystem.Models.StockOut
+@{
+    /**/
+
+    /**/
+
+    Layout = "~/Views/Shared/_Layout_DataTable.cshtml";
+}
+
+@using (Html.BeginForm("EditStockOut", "UserPage", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+{
+    @Html.HiddenFor(model => model.StockOutID)
+    @Html.HiddenFor(model => model.StockOutDescription)
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ClientIDCard, "Client ID Card ", new { @class = "control-label" })
+        @Html.EditorFor(model => model.ClientIDCard, new { htmlAttributes = new { @class = "form-control", @required = "required", @type = "text", minlength = "8", maxlength = "12" } })
+        @Html.ValidationMessageFor(model => model.ClientIDCard, "", new { @class = "text-danger" })
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ClientName, "Client Name", new { @class = "control-label" })
+        @Html.EditorFor(model => model.ClientName, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+        @Html.ValidationMessageFor(model => model.ClientName, "", new { @class = "text-danger" })
+
+
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ClientSurname, "Client Surname", new { @class = "control-label" })
+        @Html.EditorFor(model => model.ClientSurname, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+        @Html.ValidationMessageFor(model => model.ClientSurname, "", new { @class = "text-danger" })
+
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ClientContact, "Client Contact", new { @class = "control-label" })
+        @Html.EditorFor(model => model.ClientContact, new { htmlAttributes = new { @class = "form-control", @required = "required", @type = "number", minlength = "8", maxlength = "12" } })
+        @Html.ValidationMessageFor(model => model.ClientContact, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.StockOutDate, "Date", new { @class = "control-label" })
+        @Html.EditorFor(model => model.StockOutDate, new { htmlAttributes = new { @type = "date", @class = "form-control", @required = "required" } })
+        @Html.ValidationMessageFor(model => model.StockOutDate, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.StockOutPart, "Stock Out Part Number", new { @class = "control-label" })
+        @Html.EditorFor(model => model.StockOutPart, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+        @Html.ValidationMessageFor(model => model.StockOutPart, "", new { @class = "text-danger" })
+    </div>
+
+
+    <div class="form-group">
+
+        @Html.LabelFor(model => model.StockOutQuantity, "Stock Out Quantity", new { @class = "control-label" })
+        @Html.EditorFor(model => model.StockOutQuantity, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+        @Html.ValidationMessageFor(model => model.StockOutQuantity, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-primary" />
+        <input type="reset" value="Reset" class="btn" />
+    </div>
+}

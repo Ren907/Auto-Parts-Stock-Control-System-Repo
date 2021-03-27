@@ -39,9 +39,11 @@ namespace AutoPartsStockControlSystem.Models
         public string IDCard { get; set; }
 
         [Display(Name = "Name")]
+        [RegularExpression("^[-, A-Za-z]+$", ErrorMessage = "Please enter only Alphabetical Characters!")]
         public string Name { get; set; }
 
         [Display(Name = "Surname")]
+        [RegularExpression("^[-, A-Za-z]+$", ErrorMessage = "Please enter only Alphabetical Characters!")]
         public string Surname { get; set; }
 
         [Display(Name = "Email")]

@@ -192,10 +192,10 @@
     </Compile>
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\ResetPasswordModel.cs" />
-    <Compile Include="Models\Sale.cs">
+    <Compile Include="Models\SendEmailModel.cs" />
+    <Compile Include="Models\StockOut.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SendEmailModel.cs" />
     <Compile Include="Models\Supplier.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
@@ -330,12 +330,11 @@
     <Content Include="Views\AdminPage\AdminDashboard.cshtml" />
     <Content Include="Views\AdminPage\AdminSearchStock.cshtml" />
     <Content Include="Views\AdminPage\AdminUsers.cshtml" />
-    <Content Include="Views\AdminPage\AdminReports.cshtml" />
     <Content Include="Views\AdminPage\AdminSuppliers.cshtml" />
     <Content Include="Views\AdminPage\AdminSendMessage.cshtml" />
     <Content Include="Views\UserPage\UserAddNewItem.cshtml" />
     <Content Include="Views\UserPage\UserUpdateStock.cshtml" />
-    <Content Include="Views\UserPage\UserSales.cshtml" />
+    <Content Include="Views\UserPage\UserStockOut.cshtml" />
     <Content Include="Views\UserPage\UserSuppliers.cshtml" />
     <Content Include="Views\UserPage\UserSendMessage.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
@@ -346,11 +345,15 @@
     <Content Include="Views\AdminPage\AddOrEditSuppliers.cshtml" />
     <Content Include="Views\AdminPage\AddUsers.cshtml" />
     <Content Include="Views\AdminPage\EditUsers.cshtml" />
+    <Content Include="Views\AdminPage\EditItem.cshtml" />
+    <Content Include="Views\AdminPage\AdminSearchSale.cshtml" />
     <None Include="Views\Shared\_Layout_ResetPassword.cshtml" />
     <Content Include="Views\UserPage\SendEmailConfig.cshtml" />
     <Content Include="Views\UserPage\AddOrEditSupplier.cshtml" />
     <Content Include="Views\UserPage\AddItem.cshtml" />
     <Content Include="Views\UserPage\EditItem.cshtml" />
+    <Content Include="Views\UserPage\AddStockOut.cshtml" />
+    <Content Include="Views\UserPage\EditStockOut.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

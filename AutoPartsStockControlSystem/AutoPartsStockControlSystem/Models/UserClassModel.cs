@@ -49,6 +49,22 @@ namespace AutoPartsStockControlSystem.Models
 
 
 
+        //Stock out
+
+        public int StockOutID { get; set; }
+        [RegularExpression("^[-, A-Za-z]+$", ErrorMessage = "Please enter only Alphabetical Characters!")]
+        public string ClientName { get; set; }
+        [RegularExpression("^[-, A-Za-z]+$", ErrorMessage = "Please enter only Alphabetical Characters!")]
+        public string ClientSurname { get; set; }
+        public string ClientIDCard { get; set; }
+        public string ClientContact { get; set; }
+        public string StockOutPart { get; set; }
+        public string StockOutDescription { get; set; }
+        public Nullable<int> StockOutQuantity { get; set; }
+
+        public string StockOutDate { get; set; }
+
+
     }
 
 }

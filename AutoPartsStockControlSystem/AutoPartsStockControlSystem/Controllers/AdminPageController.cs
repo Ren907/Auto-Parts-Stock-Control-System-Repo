@@ -20,14 +20,11 @@ namespace AutoPartsStockControlSystem.Controllers
         }
 
         
-        public ActionResult AdminSearchStock()
-        {
-            return View();
-        }
+       
 
        
 
-        public ActionResult AdminReports()
+        public ActionResult AdminSearchSale()
         {
             return View();
         }
@@ -44,6 +41,78 @@ namespace AutoPartsStockControlSystem.Controllers
         {
             return View();
         }
+
+
+        #region ITEMS
+        public ActionResult AdminSearchStock()
+        {
+            return View();
+        }
+
+        public ActionResult GetDataItem()
+        {
+            using (EntitiesAPSCS db = new EntitiesAPSCS())
+            {
+                db.Configuration.LazyLoadingEnabled = false;
+                List<Item> ItmList = db.Items.ToList<Item>();
+                return Json(new { data = ItmList }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+        [HttpGet]
+        public ActionResult EditItem(int id = 0)
+        {
+            if (id == 0)
+                return View(new Item());
+            else
+            {
+                using (EntitiesAPSCS db = new EntitiesAPSCS())
+                {
+                    return View(db.Items.Where(x => x.ItemID == id).FirstOrDefault<Item>());
+
+                }
+            }
+        }
+
+
+
+        [HttpPost]
+        public ActionResult EditItem(Item itm)
+        {
+
+            using (EntitiesAPSCS db = new EntitiesAPSCS())
+            {
+
+                db.Entry(itm).State = EntityState.Modified;
+                db.SaveChanges();
+                return Json(new { success = true, message = "Updated Successfully" }, JsonRequestBehavior.AllowGet);
+
+            }
+
+
+        }
+
+
+        [HttpPost]
+        public ActionResult DeleteItem(int id)
+        {
+            using (EntitiesAPSCS db = new EntitiesAPSCS())
+            {
+                Item itm = db.Items.Where(x => x.ItemID == id).FirstOrDefault<Item>();
+                db.Items.Remove(itm);
+                db.SaveChanges();
+                return Json(new { success = true, message = "Deleted Successfully" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+
+
+
+        #endregion
+
+
 
         #region Users
         public ActionResult AdminUsers()

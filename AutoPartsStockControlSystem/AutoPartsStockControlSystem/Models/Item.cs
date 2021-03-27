@@ -11,22 +11,17 @@ namespace AutoPartsStockControlSystem.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Item
     {
         public int ItemID { get; set; }
         public string ItemPart { get; set; }
-        [RegularExpression("^[-_, A-Za-z]+$", ErrorMessage = "Please enter only Alphabetical Characters!")]
         public string ItemDescription { get; set; }
         public string ItemCategory { get; set; }
         public Nullable<int> ItemQuantity { get; set; }
         public Nullable<decimal> ItemPrice { get; set; }
-        [RegularExpression("^[- A-Za-z]+$", ErrorMessage = "Please enter only Alphabetical Characters!")]
         public string VehicleMake { get; set; }
-        [RegularExpression("^[- A-Za-z0-9]+$", ErrorMessage = "Please enter only Alphabetical Characters!")]
         public string VehicleModel { get; set; }
-        [RegularExpression("^[-_, 0-9]*$", ErrorMessage = "Please enter only year Range! example:(2020 - 2021)")]
         public string VehicleModelYearRange { get; set; }
         public string PartCompatability { get; set; }
     }

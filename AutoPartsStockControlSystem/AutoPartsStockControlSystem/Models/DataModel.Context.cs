@@ -26,7 +26,7 @@ namespace AutoPartsStockControlSystem.Models
         }
     
         public virtual DbSet<Item> Items { get; set; }
-        public virtual DbSet<Sale> Sales { get; set; }
+        public virtual DbSet<StockOut> StockOuts { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<User> Users { get; set; }
     }

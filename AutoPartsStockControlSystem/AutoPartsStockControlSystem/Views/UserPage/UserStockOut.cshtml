@@ -1,27 +1,27 @@
 ﻿
 @{
-    ViewBag.Title = "AdminSearchStock";
-    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+    ViewBag.Title = "StockOut";
+    Layout = "~/Views/Shared/_Layout_User.cshtml";
 }
 
-<h3>Stock Items</h3>
+<h3>Stock Out</h3>
 <br />
+<a class="btn btn-success" style="margin-bottom:10px" onclick="PopupForm('@Url.Action("AddStockOut","UserPage")')"><i class="fa fa-plus"></i> Add New</a>
 <br />
 <br />
 
-<table id="ItemsTable" class="table table-striped table-bordered" style="width:100%">
+<table id="StockOutTable" class="table table-striped table-bordered" style="width:100%">
     <thead>
         <tr>
+
+            <th>Name</th>
+            <th>Surname</th>
+            <th>IDCard</th>
+            <th>Contact</th>
             <th>Part Nos</th>
             <th>Description</th>
-            <th>Category</th>
-            <th>Price</th>
+            <th>Date</th>
             <th>Quantity</th>
-            <th>Make</th>
-            <th>Model</th>
-            <th>Year</th>
-            <th>Compatability</th>
-
             <th></th>
         </tr>
     </thead>
@@ -37,27 +37,30 @@
 
     <script>
         var Popup, dataTable;
+
         $(document).ready(function () {
-            dataTable = $("#ItemsTable").DataTable({
+            dataTable = $("#StockOutTable").DataTable({
 
                 "ajax": {
-                    "url": "/AdminPage/GetDataItem",
+                    "url": "/UserPage/GetStockOutData",
                     "type": "GET",
                     "datatype": "json"
                 },
                 "columns": [
-                    { "data": "ItemPart" },
-                    { "data": "ItemDescription" },
-                    { "data": "ItemCategory" },
-                    { "data": "ItemPrice" },
-                    { "data": "ItemQuantity" },
-                    { "data": "VehicleMake" },
-                    { "data": "VehicleModel" },
-                    { "data": "VehicleModelYearRange" },
-                    { "data": "PartCompatability" },
+
+                    { "data": "ClientName" },
+                    { "data": "ClientSurname" },
+                    { "data": "ClientIDCard" },
+                    { "data": "ClientContact" },
+                    { "data": "StockOutPart" },
+                    { "data": "StockOutDescription" },
+                    { "data": "StockOutDate" },
+                    { "data": "StockOutQuantity" },
+
+
                     {
-                       "data":"ItemID" , "render" : function (data) {
-                        return "<a class='btn btn-default btn-sm' onclick=PopupForm('@Url.Action("EditItem", "AdminPage")/" + data + "')><i class='fa fa-pencil'></i> Edit</a><a class='btn btn-danger btn-sm' style='margin-left:5px' onclick=Delete("+data+")><i class='fa fa-trash'></i> Delete</a>";
+                        "data":"StockOutID" , "render" : function (data) {
+                        return "<a class='btn btn-default btn-sm' onclick=PopupForm('@Url.Action("EditStockOut", "UserPage")/" + data + "')><i class='fa fa-pencil'></i> Edit</a><a class='btn btn-danger btn-sm' style='margin-left:5px' onclick=Delete("+data+")><i class='fa fa-trash'></i> Delete</a>";
                     },
                         "orderable": false,
                         "searchable":false,
@@ -67,7 +70,7 @@
                 ],
                 "language": {
 
-                    "emptyTable" : "No Records Found, Add new Records by using the <b>Add New</b> Button"
+                    "emptyTable" : "No Sale Records Found, Add new Records by using the <b>Add New</b> Button"
                 }
             });
         });
@@ -114,7 +117,7 @@
 
                         }
 
-                        else {
+                        else if (!data.success) {
 
                             $.notify(data.message, {
                                 globalPosition: "top center",
@@ -124,8 +127,9 @@
 
                         }
 
-                    },
 
+
+                    },
 
 
                 });
@@ -141,7 +145,7 @@
             {
                 $.ajax({
                     type: "POST",
-                    url: '@Url.Action("DeleteItem", "AdminPage")/' + id,
+                    url: '@Url.Action("DeleteStockOut", "UserPage")/' + id,
                     success: function (data) {
                         if (data.success)
                         {
@@ -164,5 +168,8 @@
 
 
 
+
+
     </script>
+
 }

@@ -17,17 +17,6 @@ namespace AutoPartsStockControlSystem.Controllers
             return View();
         }
 
-        public ActionResult UserSearchStock()
-        {
-            return View();
-        }
-
-        public ActionResult UserSales()
-        {
-            return View();
-        }
-
-
         public ActionResult UserSendMessage()
         {
             return View();
@@ -40,7 +29,7 @@ namespace AutoPartsStockControlSystem.Controllers
 
 
         #region Update Stock
-        
+
         public ActionResult UserUpdateStock()
         {
 
@@ -218,6 +207,186 @@ namespace AutoPartsStockControlSystem.Controllers
 
 
         #endregion
+
+
+        #region UserStockOut
+        public ActionResult UserStockOut()
+        {
+            return View();
+        }
+
+        public ActionResult GetStockOutData()
+        {
+            using (EntitiesAPSCS db = new EntitiesAPSCS())
+            {
+                db.Configuration.LazyLoadingEnabled = false;
+                List<StockOut> StockOutList = db.StockOuts.ToList<StockOut>();
+                return Json(new { data = StockOutList }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+        [HttpGet]
+        public ActionResult AddStockOut(int id = 0)
+        {
+            if (id == 0)
+                return View(new StockOut());
+            else
+            {
+                using (EntitiesAPSCS db = new EntitiesAPSCS())
+                {
+                    return View(db.StockOuts.Where(x => x.StockOutID == id).FirstOrDefault<StockOut>());
+
+                }
+            }
+        }
+
+
+
+        [HttpPost]
+        public ActionResult AddStockOut(StockOut stkout)
+        {
+
+            using (EntitiesAPSCS db = new EntitiesAPSCS())
+            {
+                
+                var PartIDmatch = db.Items.Any(x => x.ItemPart.Equals(stkout.StockOutPart));
+                var GetItem = db.Items.FirstOrDefault(x => x.ItemPart == stkout.StockOutPart);
+
+
+                if (stkout.StockOutID == 0)
+                {
+                    if (!PartIDmatch)
+                    {
+
+                        return Json(new { success = false, message = "Item Part Number Not Found!" }, JsonRequestBehavior.AllowGet);
+
+                    }
+
+                    //else if (GetItem.ItemQuantity <= 10)
+                    //{
+
+
+                    //}
+     
+                    else if (stkout.StockOutQuantity > GetItem.ItemQuantity)
+                    {
+
+
+                        return Json(new { success = false, message = "Not Enough Stock Quantity!" }, JsonRequestBehavior.AllowGet);
+
+
+                    }
+
+                    else if (PartIDmatch == true && stkout.StockOutQuantity != null)
+                    {
+
+                        stkout.StockOutDescription = GetItem.ItemDescription;
+
+                        GetItem.ItemQuantity = GetItem.ItemQuantity - stkout.StockOutQuantity.Value;
+                        db.StockOuts.Add(stkout);
+                        db.SaveChanges();
+                        return Json(new { success = true, message = "Saved Successfully" }, JsonRequestBehavior.AllowGet);
+                    }
+
+                }
+               
+            }
+            return View();
+
+        }
+
+
+        [HttpGet]
+        public ActionResult EditStockOut(int id = 0)
+        {
+            if (id == 0)
+                return View(new StockOut());
+            else
+            {
+                using (EntitiesAPSCS db = new EntitiesAPSCS())
+                {
+                    return View(db.StockOuts.Where(x => x.StockOutID == id).FirstOrDefault<StockOut>());
+
+                }
+            }
+        }
+
+
+
+        [HttpPost]
+        public ActionResult EditStockOut(StockOut stkout)
+        {
+
+            using (EntitiesAPSCS db = new EntitiesAPSCS())
+            {
+                var stkoutID = db.StockOuts.Find(stkout.StockOutID);
+
+                var PartIDmatch = db.Items.Any(x => x.ItemPart.Equals(stkout.StockOutPart));
+                var GetItem = db.Items.FirstOrDefault(x => x.ItemPart == stkout.StockOutPart);
+                var GetSqty = db.StockOuts.FirstOrDefault(x => x.StockOutPart == stkout.StockOutPart);
+                
+
+                if (!db.Items.Any(x => x.ItemPart == stkout.StockOutPart))
+                {
+
+                    return Json(new { success = false, message = "Item Part Number Not Found!" }, JsonRequestBehavior.AllowGet);
+
+                }
+
+                //else if (GetItem.ItemQuantity <= 10)
+                //{
+                    
+
+                //}
+
+                else if (stkout.StockOutQuantity > GetItem.ItemQuantity)
+                {
+
+                    return Json(new { success = false, message = "Not Enough Stock Quantity!" }, JsonRequestBehavior.AllowGet);
+
+                }
+
+                else if (PartIDmatch == true && stkout.StockOutQuantity != null)
+                {
+
+                    GetItem.ItemQuantity = (GetItem.ItemQuantity + GetSqty.StockOutQuantity.Value) - stkout.StockOutQuantity.Value;
+   
+                    db.Entry(stkoutID).CurrentValues.SetValues(stkout);
+                    db.Entry(stkoutID).State = EntityState.Modified;
+
+                    db.SaveChanges();
+                    return Json(new { success = true, message = "Record & Stock Quantity Updated Successfully!" }, JsonRequestBehavior.AllowGet);
+                }
+
+                return View();
+               
+            }
+        }
+
+
+        [HttpPost]
+        public ActionResult DeleteStockOut(int id, StockOut stkout)
+        {
+            
+            using (EntitiesAPSCS db = new EntitiesAPSCS())
+            {
+                stkout = db.StockOuts.Where(x => x.StockOutID == id).FirstOrDefault<StockOut>();
+
+                var GetItem = db.Items.FirstOrDefault(x => x.ItemPart == stkout.StockOutPart);
+                var GetSqty = db.StockOuts.FirstOrDefault(x => x.StockOutPart == stkout.StockOutPart);
+
+                GetItem.ItemQuantity = GetItem.ItemQuantity + GetSqty.StockOutQuantity.Value;
+                db.StockOuts.Remove(stkout);
+                db.SaveChanges();
+                return Json(new { success = true, message = "Record Deleted Successfully. Stock Quantity Updated!" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+
+        #endregion
+
 
         #region UserSuppliers
         public ActionResult UserSuppliers()

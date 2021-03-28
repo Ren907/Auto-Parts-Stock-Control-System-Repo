@@ -43,7 +43,7 @@ namespace AutoPartsStockControlSystem.Models
         public string VehicleMake { get; set; }
         [RegularExpression("^[- A-Za-z]+$", ErrorMessage = "Please enter only Alphabetical Characters!")]
         public string VehicleModel { get; set; }
-        [RegularExpression("^[-_, 0-9]*$", ErrorMessage = "Please enter only year Range! example:(2020 - 2021)")]
+        [RegularExpression("^[-_,0-9]*$", ErrorMessage = "Please enter only year Range! example:(2020-2021)")]
         public string VehicleModelYearRange { get; set; }
         public string PartCompatability { get; set; }
 

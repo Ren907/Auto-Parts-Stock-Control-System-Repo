@@ -23,13 +23,16 @@
             <th>Year</th>
             <th>Compatability</th>
 
-            <th></th>
+            <th>Edit/Delete</th>
         </tr>
     </thead>
 </table>
 
 <link href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap.min.css" rel="stylesheet" />
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+@*<link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet" />*@
+<link href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css" rel="stylesheet" />
 
 @section scripts{
 
@@ -44,6 +47,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.colVis.min.js"></script>
 
 
 
@@ -85,9 +89,38 @@
 
                 dom: 'Bfrtip',
                 buttons: [
-                  'excel', 'pdf', 'print'
-                ]
 
+                    'colvis',
+
+
+                    {
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+
+
+                    {
+                        extend: 'pdf',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+
+
+                    {
+                        extend: 'print',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    
+                ],
+                columnDefs: [{
+                    targets: -1,
+                    visible: false
+                }]
 
             });
 

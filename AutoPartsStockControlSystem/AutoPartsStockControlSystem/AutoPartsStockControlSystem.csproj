@@ -348,6 +348,9 @@
     <Content Include="Views\AdminPage\EditUsers.cshtml" />
     <Content Include="Views\AdminPage\EditItem.cshtml" />
     <Content Include="Views\AdminPage\AdminSearchSale.cshtml" />
+    <Content Include="Views\AdminPage\AdminStockOut.cshtml" />
+    <Content Include="Views\AdminPage\AddStockOut.cshtml" />
+    <Content Include="Views\AdminPage\EditStockOut.cshtml" />
     <None Include="Views\Shared\_Layout_ResetPassword.cshtml" />
     <Content Include="Views\UserPage\SendEmailConfig.cshtml" />
     <Content Include="Views\UserPage\AddOrEditSupplier.cshtml" />

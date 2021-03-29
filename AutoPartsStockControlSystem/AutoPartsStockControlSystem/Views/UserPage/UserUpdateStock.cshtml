@@ -16,7 +16,7 @@
 
 
         @Html.LabelFor(model => model.ItemPart, "Part Number", new { @class = "control-label" })
-        @Html.EditorFor(model => model.ItemPart, new { htmlAttributes = new { @class = "form-control",  placeholder = "Please Enter Part Number", @Value = "" } })
+        @Html.EditorFor(model => model.ItemPart, new { htmlAttributes = new { @class = "form-control",  placeholder = "Please Enter Part Number", @Value = "", autocomplete = "off" } })
         @Html.ValidationMessageFor(model => model.ItemPart, "", new { @class = "text-danger" })
 
 
@@ -25,7 +25,7 @@
 
     <div class="form-group">
         @Html.LabelFor(model => model.ItemQuantity, "Quantity In", new { @class = "control-label" })
-        @Html.EditorFor(model => model.ItemQuantity, new { htmlAttributes = new { @class = "form-control", placeholder = "Please Enter Quantity In", @Value = "" } })
+        @Html.EditorFor(model => model.ItemQuantity, new { htmlAttributes = new { @class = "form-control", placeholder = "Please Enter Quantity In", @Value = "", autocomplete = "off" } })
         @Html.ValidationMessageFor(model => model.ItemQuantity, "", new { @class = "text-danger" })
 
     </div>

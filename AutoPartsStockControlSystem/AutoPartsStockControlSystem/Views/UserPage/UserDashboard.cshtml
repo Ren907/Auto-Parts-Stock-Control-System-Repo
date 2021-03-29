@@ -26,14 +26,11 @@
 <br />
 <br />
 
-   <div class="flex-parent jc-center">
-    <button class="button" onclick="@("window.location.href='" + @Url.Action("UserSearchStock", "UserPage") + "'");"><span>Search Stock</span></button>
-    <button class="button" onclick="@("window.location.href='" + @Url.Action("UserAddNewItem", "UserPage") + "'");"><span>Add New Item</span></button>
+<div class="flex-parent jc-center">
+
+    <button class="button" onclick="@("window.location.href='" + @Url.Action("UserAddNewItem", "UserPage") + "'");"><span>New Stock Item</span></button>
+    <button class="button" onclick="@("window.location.href='" + @Url.Action("UserStockOut", "UserPage") + "'");"><span>Stock Out</span></button>
     <button class="button" onclick="@("window.location.href='" + @Url.Action("UserUpdateStock", "UserPage") + "'");"><span>Update Stock</span></button>
-   </div>
-    <br />
-    <div class="flex-parent jc-center">
-        <button class="button" onclick="@("window.location.href='" + @Url.Action("UserSales", "UserPage") + "'");"><span>Sales</span></button>
-        <button class="button" onclick="@("window.location.href='" + @Url.Action("UserSuppliers", "UserPage") + "'");"><span>Suppliers</span></button>
-        <button class="button" onclick="@("window.location.href='" + @Url.Action("UserSendMessage", "UserPage") + "'");"><span>Send Message</span></button>
-    </div>
+    <button class="button" onclick="@("window.location.href='" + @Url.Action("UserSuppliers", "UserPage") + "'");"><span>Suppliers</span></button>
+    <button class="button" onclick="@("window.location.href='" + @Url.Action("UserSendMessage", "UserPage") + "'");"><span>Send Message</span></button>
+</div>

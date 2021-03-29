@@ -34,9 +34,9 @@
 
 
 <div class="flex-parent jc-center">
-    <button class="button" onclick="@("window.location.href='" + @Url.Action("AdminSearchStock", "AdminPage") + "'");"><span>Search Stock</span></button>
     <button class="button" onclick="@("window.location.href='" + @Url.Action("AdminUsers", "AdminPage") + "'");"><span>Users</span></button>
-    <button class="button" onclick="@("window.location.href='" + @Url.Action("AdminReports", "AdminPage") + "'");"><span>Reports</span></button>
+    <button class="button" onclick="@("window.location.href='" + @Url.Action("AdminSearchStock", "AdminPage") + "'");"><span>Stock</span></button>
+    <button class="button" onclick="@("window.location.href='" + @Url.Action("AdminStockOut", "AdminPage") + "'");"><span>Stock Out</span></button>
     <button class="button" onclick="@("window.location.href='" + @Url.Action("AdminSuppliers", "AdminPage") + "'");"><span>Suppliers</span></button>
     <button class="button" onclick="@("window.location.href='" + @Url.Action("AdminSendMessage", "AdminPage") + "'");"><span>Send Message</span></button>
-    </div>
+</div>

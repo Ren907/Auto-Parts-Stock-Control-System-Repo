@@ -15,14 +15,14 @@
 
     <div class="form-group">
         @Html.LabelFor(model => model.ItemPart, "Item Part Number", new { @class = "control-label" })
-        @Html.EditorFor(model => model.ItemPart, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+        @Html.EditorFor(model => model.ItemPart, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", autocomplete = "off" } })
         @Html.ValidationMessageFor(model => model.ItemPart, "", new { @class = "text-danger" })
 
     </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.ItemDescription, "Item Description", new { @class = "control-label" })
-        @Html.EditorFor(model => model.ItemDescription, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+        @Html.EditorFor(model => model.ItemDescription, new { htmlAttributes = new { @class = "form-control", @required = "required", autocomplete = "off" } })
         @Html.ValidationMessageFor(model => model.ItemDescription, "", new { @class = "text-danger" })
 
     </div>
@@ -58,7 +58,7 @@
 
     <div class="form-group">
         @Html.LabelFor(model => model.ItemPrice, "Item Price", new { @class = "control-label" })
-        @Html.EditorFor(model => model.ItemPrice, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+        @Html.EditorFor(model => model.ItemPrice, new { htmlAttributes = new { @class = "form-control", @required = "required", autocomplete = "off" } })
         @Html.ValidationMessageFor(model => model.ItemPrice, "", new { @class = "text-danger" })
     </div>
 
@@ -80,26 +80,26 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(model => model.VehicleMake, "Vehicle Make", new { @class = "control-label" })
-        @Html.EditorFor(model => model.VehicleMake, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+        @Html.EditorFor(model => model.VehicleMake, new { htmlAttributes = new { @class = "form-control", @required = "required", autocomplete = "off" } })
         @Html.ValidationMessageFor(model => model.VehicleMake, "", new { @class = "text-danger" })
     </div>
 
 
     <div class="form-group">
         @Html.LabelFor(model => model.VehicleModel, "Vehicle Model", new { @class = "control-label" })
-        @Html.EditorFor(model => model.VehicleModel, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+        @Html.EditorFor(model => model.VehicleModel, new { htmlAttributes = new { @class = "form-control", @required = "required", autocomplete = "off" } })
         @Html.ValidationMessageFor(model => model.VehicleModel, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.VehicleModelYearRange, "Vehicle Model Year", new { @class = "control-label" })
-        @Html.EditorFor(model => model.VehicleModelYearRange, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+        @Html.EditorFor(model => model.VehicleModelYearRange, new { htmlAttributes = new { @class = "form-control", @required = "required", autocomplete = "off" } })
         @Html.ValidationMessageFor(model => model.VehicleModelYearRange, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.ItemQuantity, "Quantity", new { @class = "control-label" })
-        @Html.EditorFor(model => model.ItemQuantity, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+        @Html.EditorFor(model => model.ItemQuantity, new { htmlAttributes = new { @class = "form-control", @required = "required", autocomplete = "off" } })
         @Html.ValidationMessageFor(model => model.ItemQuantity, "", new { @class = "text-danger" })
     </div>
 

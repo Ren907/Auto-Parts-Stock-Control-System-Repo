@@ -11,16 +11,36 @@ namespace AutoPartsStockControlSystem.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class User
     {
         public int UserID { get; set; }
+
+        [Display(Name = "ID Card Number")]
         public string IDCard { get; set; }
+
+        [Display(Name = "Name")]
+        [RegularExpression("^[-, A-Za-z]+$", ErrorMessage = "Please enter only Alphabetical Characters!")]
         public string Name { get; set; }
+
+        [Display(Name = "Surname")]
+        [RegularExpression("^[-, A-Za-z]+$", ErrorMessage = "Please enter only Alphabetical Characters!")]
         public string Surname { get; set; }
+
+        [Display(Name = "Email")]
+        [EmailAddress]
         public string Email { get; set; }
+
+
+        [Display(Name = "Contact")]
+        [Phone]
         public string Contact { get; set; }
+
+        [Display(Name = "Password")]
         public string Password { get; set; }
+
+        [Display(Name = "User Type")]
         public string UserType { get; set; }
         public string ResetPasswordCode { get; set; }
     }

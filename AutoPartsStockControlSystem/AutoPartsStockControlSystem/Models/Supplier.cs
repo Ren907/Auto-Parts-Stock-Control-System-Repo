@@ -11,14 +11,27 @@ namespace AutoPartsStockControlSystem.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Supplier
     {
         public int SupplierID { get; set; }
+
+        [Display(Name = "Supplier Name")]
         public string SupplierName { get; set; }
+
+        [Display(Name = "Products Type")]
         public string SupplierProductsType { get; set; }
+
+        [Display(Name = "Contact")]
+        [Phone]
         public string SupplierContact { get; set; }
+
+        [Display(Name = "Email")]
+        [EmailAddress]
         public string SupplierEmail { get; set; }
+
+        [Display(Name = "Supplier Experience")]
         public string SupplierExperience { get; set; }
     }
 }

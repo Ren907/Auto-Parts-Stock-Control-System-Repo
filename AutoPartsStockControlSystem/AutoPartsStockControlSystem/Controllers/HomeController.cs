@@ -14,10 +14,10 @@ namespace AutoPartsStockControlSystem.Controllers
     
     public class HomeController : Controller
     {
-        //////////////////////////////////////////////////// Declare Data Entitry with Database
+        // Declare Data Entitry with Database
         EntitiesAPSCS db = new EntitiesAPSCS();
 
-        /////////////////////////////////////////////////////Login Function
+       
 
         [HttpGet]
         public ActionResult Login()
@@ -123,7 +123,7 @@ namespace AutoPartsStockControlSystem.Controllers
 
         private void SendEmail(string emailAddress, string body, string subject)
         {
-            using (MailMessage mm = new MailMessage("renald92@gmail.com", emailAddress))
+            using (MailMessage mm = new MailMessage("AutoPartsStockControlSystem@gmail.com", emailAddress))
             {
                 mm.Subject = subject;
                 mm.Body = body;
@@ -132,7 +132,7 @@ namespace AutoPartsStockControlSystem.Controllers
                 SmtpClient smtp = new SmtpClient();
                 smtp.Host = "smtp.gmail.com";
                 smtp.EnableSsl = true;
-                NetworkCredential NetworkCred = new NetworkCredential("renald92@gmail.com", "Ilovecars908908");
+                NetworkCredential NetworkCred = new NetworkCredential("AutoPartsStockControlSystem@gmail.com", "APSCS907");
                 smtp.UseDefaultCredentials = true;
                 smtp.Credentials = NetworkCred;
                 smtp.Port = 587;

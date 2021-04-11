@@ -1,5 +1,4 @@
-﻿
-@model AutoPartsStockControlSystem.Models.SendEmailModel
+﻿@model AutoPartsStockControlSystem.Models.SendEmailModel
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
@@ -7,11 +6,8 @@
     ViewBag.Title = "AdminSendMessage";
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
-
 <h3>Send Message</h3>
 
-
-@*Send request to invoke SendEmailView view*@
 @using (Html.BeginForm("SendEmailConfig", "AdminPage", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
@@ -21,7 +17,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ToEmail, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ToEmail, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                @Html.EditorFor(model => model.ToEmail, new { htmlAttributes = new { @class = "form-control", @required = "required", autocomplete = "off" } })
                 @Html.ValidationMessageFor(model => model.ToEmail, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -30,7 +26,7 @@
             @Html.LabelFor(model => model.EMailBody, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
 
-                @Html.EditorFor(model => model.EMailBody, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                @Html.EditorFor(model => model.EMailBody, new { htmlAttributes = new { @class = "form-control", @required = "required", autocomplete = "off" } })
                 @Html.ValidationMessageFor(model => model.EMailBody, "", new { @class = "text-danger" })
                 
             </div>
@@ -39,7 +35,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.EmailSubject, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.EmailSubject, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                @Html.EditorFor(model => model.EmailSubject, new { htmlAttributes = new { @class = "form-control", @required = "required", autocomplete = "off" } })
                 @Html.ValidationMessageFor(model => model.EmailSubject, "", new { @class = "text-danger" })
             </div>
         </div>

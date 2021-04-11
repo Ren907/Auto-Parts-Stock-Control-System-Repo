@@ -17,7 +17,7 @@ namespace AutoPartsStockControlSystem.Controllers
         // Declare Data Entitry with Database
         EntitiesAPSCS db = new EntitiesAPSCS();
 
-       
+        #region Log In      
 
         [HttpGet]
         public ActionResult Login()
@@ -26,17 +26,18 @@ namespace AutoPartsStockControlSystem.Controllers
         }
 
         [HttpPost]
+        // Prevents cross site requests and attacks.
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model)
         {
-           
+           // hash the password used
             string HashedPassword = GenerateSHA256Hash(model.Password);
-
+            // Check if usertype is Admin or User
             var checkLoginAdmin = db.Users.Where(x => x.Email.Equals(model.Email) && x.Password.Equals(HashedPassword) && x.UserType.Equals("Admin")).FirstOrDefault();
 
             var checkLoginUser = db.Users.Where(x => x.Email.Equals(model.Email) && x.Password.Equals(HashedPassword) && x.UserType.Equals("User")).FirstOrDefault();
 
-
+            // check if credentials are not null and Email, Password Match 
             if (checkLoginAdmin != null)
             {
 
@@ -52,7 +53,7 @@ namespace AutoPartsStockControlSystem.Controllers
                 return RedirectToAction("UserDashboard", "UserPage");
 
             }
-
+            // show message that credentials are wrong
             else
             {
                 ViewBag.Notification = "Wrong E-Mail or Password";
@@ -61,11 +62,11 @@ namespace AutoPartsStockControlSystem.Controllers
             return View();
         }
 
+        #endregion
 
 
-
-
-        ////////////////////////////////////////////////////////////////////Logout Function
+        #region Log Out
+        //Logout Function
 
         public ActionResult Logout()
         {
@@ -74,9 +75,9 @@ namespace AutoPartsStockControlSystem.Controllers
             return RedirectToAction("Login", "Home");
         }
 
+        #endregion
 
-        ///////////////////////////////////////////////////////////// Forgot Password Function
-
+        #region Reset / Forgot Password
         public ActionResult ForgotPassword()
         {
             return View();
@@ -85,6 +86,7 @@ namespace AutoPartsStockControlSystem.Controllers
         [HttpPost]
         public ActionResult ForgotPassword(string EmailID)
         {
+            // setting request link
             string resetCode = Guid.NewGuid().ToString();
             var verifyUrl = "/Home/ResetPassword/" + resetCode;
             var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
@@ -95,10 +97,10 @@ namespace AutoPartsStockControlSystem.Controllers
                 {
                     getUser.ResetPasswordCode = resetCode;
 
-
                     context.Configuration.ValidateOnSaveEnabled = false;
                     context.SaveChanges();
 
+                    // Emial content to reset password via link
                     var subject = "Password Reset Request";
                     var body = "Hi " + getUser.Name + ", <br/><br/> Below please find the Password Reset Link requested from Auto Parts Stock Control System. Please click on the link to reset your password. " +
 
@@ -111,6 +113,7 @@ namespace AutoPartsStockControlSystem.Controllers
                 }
                 else
                 {
+                    //Check if email exist
                     ViewBag.Message = "Email Address does not exist!. Please check your input!";
                     return View();
                 }
@@ -119,8 +122,8 @@ namespace AutoPartsStockControlSystem.Controllers
             return View();
         }
 
-        ///////////////////////////////////////////////////////////Send Forgot Password Email
-
+        //Send Forgot Password Email
+        // configuration of email used to send the reset link.
         private void SendEmail(string emailAddress, string body, string subject)
         {
             using (MailMessage mm = new MailMessage("AutoPartsStockControlSystem@gmail.com", emailAddress))
@@ -141,7 +144,7 @@ namespace AutoPartsStockControlSystem.Controllers
             }
         }
 
-        ////////////////////////////////////////////////////////Reset Password after link
+        //Reset Password after link
         
         public ActionResult ResetPassword(string id)
         {
@@ -182,12 +185,9 @@ namespace AutoPartsStockControlSystem.Controllers
                     var user = context.Users.Where(a => a.ResetPasswordCode == model.ResetCode).FirstOrDefault();
                     if (user != null)
                     {
-                        //Hash and Salt password before saving changes
-
-                        //string Salt = CreateSalt(10);
+                        // Hash Password
                         string HashedPassword = GenerateSHA256Hash(model.ConfirmPassword);
 
-               
                         user.Password = HashedPassword;
                             
                         //make resetpasswordcode empty string now
@@ -207,19 +207,7 @@ namespace AutoPartsStockControlSystem.Controllers
             return View(model);
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-        ////  Create salt bytes 
-
-        //public string CreateSalt(int size)
-        //{
-        //    var rng = new RNGCryptoServiceProvider();
-        //    var buff = new byte[size];
-        //    rng.GetBytes(buff);
-        //    return Convert.ToBase64String(buff);
-        //}
-
+        #endregion
 
 
         // Generating the 256 hash
@@ -235,12 +223,9 @@ namespace AutoPartsStockControlSystem.Controllers
 
             return ByteArrayToHexString(hash);
 
-
-
         }
 
-
-        // convert byte array to hex strings
+        // Convert byte array into hex strings
 
         public static string ByteArrayToHexString(byte[] ba)
         {
@@ -250,9 +235,8 @@ namespace AutoPartsStockControlSystem.Controllers
             return hex.ToString();
         }
 
-
-       
     }
-}  
 
-       
+   
+}
+

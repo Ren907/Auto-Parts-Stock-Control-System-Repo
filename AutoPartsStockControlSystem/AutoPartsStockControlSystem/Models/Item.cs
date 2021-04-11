@@ -24,7 +24,9 @@ namespace AutoPartsStockControlSystem.Models
         public string ItemCategory { get; set; }
         [Required]
         public Nullable<int> ItemQuantity { get; set; }
+
         public Nullable<decimal> ItemPrice { get; set; }
+
         [RegularExpression("^[- A-Za-z]+$", ErrorMessage = "Please enter only Alphabetical Characters!")]
         public string VehicleMake { get; set; }
         [RegularExpression("^[- A-Za-z]+$", ErrorMessage = "Please enter only Alphabetical Characters!")]

@@ -20,9 +20,6 @@ namespace AutoPartsStockControlSystem.Controllers
         }
 
 
-       
-
-
         public ActionResult AdminSendMessage()
         {
             return View();
@@ -35,6 +32,129 @@ namespace AutoPartsStockControlSystem.Controllers
         }
 
 
+        #region Users
+        public ActionResult AdminUsers()
+        {
+            return View();
+        }
+        // show data of users in data table
+        public ActionResult GetDataUsers()
+        {
+            using (EntitiesAPSCS db = new EntitiesAPSCS())
+            {
+                db.Configuration.LazyLoadingEnabled = false;
+                List<User> UsrList = db.Users.ToList<User>();
+                return Json(new { data = UsrList }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        // Check Id
+        [HttpGet]
+        public ActionResult AddUsers(int id = 0)
+        {
+            if (id == 0)
+                return View(new User());
+            else
+            {
+                using (EntitiesAPSCS db = new EntitiesAPSCS())
+                {
+                    return View(db.Users.Where(x => x.UserID == id).FirstOrDefault<User>());
+
+                }
+            }
+        }
+
+
+        // Add new User
+        [HttpPost]
+        public ActionResult AddUsers(User usr)
+        {
+
+            using (EntitiesAPSCS db = new EntitiesAPSCS())
+            {
+                if (usr.UserID == 0)
+                {
+                    // check input ID is already exist 
+                    if (db.Users.Any(x => x.IDCard == usr.IDCard))
+                    {
+
+                        return Json(new { success = false, message = "IDCard Number Already Exist!" }, JsonRequestBehavior.AllowGet);
+
+                    }
+
+                    else
+                    { // New user added
+
+                        db.Users.Add(usr);
+                        db.SaveChanges();
+                        return Json(new { success = true, message = "Saved Successfully" }, JsonRequestBehavior.AllowGet);
+
+                    }
+
+                }
+                else
+                {// Edit user updated
+
+                    db.Entry(usr).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return Json(new { success = true, message = "Updated Successfully" }, JsonRequestBehavior.AllowGet);
+                }
+            }
+
+
+        }
+
+
+        [HttpGet]
+        public ActionResult EditUsers(int id = 0)
+        {
+            if (id == 0)
+                return View(new User());
+            else
+            {
+                using (EntitiesAPSCS db = new EntitiesAPSCS())
+                {
+                    return View(db.Users.Where(x => x.UserID == id).FirstOrDefault<User>());
+
+                }
+            }
+        }
+
+
+        // Edit user record
+        [HttpPost]
+        public ActionResult EditUsers(User usr)
+        {
+
+            using (EntitiesAPSCS db = new EntitiesAPSCS())
+            {
+
+                db.Entry(usr).State = EntityState.Modified;
+                db.SaveChanges();
+                return Json(new { success = true, message = "Updated Successfully" }, JsonRequestBehavior.AllowGet);
+
+            }
+
+
+        }
+
+        // delete user record
+        [HttpPost]
+        public ActionResult DeleteUsers(int id)
+        {
+            using (EntitiesAPSCS db = new EntitiesAPSCS())
+            {
+                User usr = db.Users.Where(x => x.UserID == id).FirstOrDefault<User>();
+                db.Users.Remove(usr);
+                db.SaveChanges();
+                return Json(new { success = true, message = "Deleted Successfully" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+        #endregion
+
+
 
         #region UserStockOut
 
@@ -45,7 +165,7 @@ namespace AutoPartsStockControlSystem.Controllers
         }
 
 
-
+        // get data to data table
         public ActionResult GetStockOutData()
         {
             using (EntitiesAPSCS db = new EntitiesAPSCS())
@@ -56,76 +176,6 @@ namespace AutoPartsStockControlSystem.Controllers
             }
         }
 
-
-        [HttpGet]
-        public ActionResult AddStockOut(int id = 0)
-        {
-            if (id == 0)
-                return View(new StockOut());
-            else
-            {
-                using (EntitiesAPSCS db = new EntitiesAPSCS())
-                {
-                    return View(db.StockOuts.Where(x => x.StockOutID == id).FirstOrDefault<StockOut>());
-
-                }
-            }
-        }
-
-
-
-        [HttpPost]
-        public ActionResult AddStockOut(StockOut stkout)
-        {
-
-            using (EntitiesAPSCS db = new EntitiesAPSCS())
-            {
-
-                var PartIDmatch = db.Items.Any(x => x.ItemPart.Equals(stkout.StockOutPart));
-                var GetItem = db.Items.FirstOrDefault(x => x.ItemPart == stkout.StockOutPart);
-
-
-                if (stkout.StockOutID == 0)
-                {
-                    if (!PartIDmatch)
-                    {
-
-                        return Json(new { success = false, message = "Item Part Number Not Found!" }, JsonRequestBehavior.AllowGet);
-
-                    }
-
-                    //else if (GetItem.ItemQuantity <= 10)
-                    //{
-
-
-                    //}
-
-                    else if (stkout.StockOutQuantity > GetItem.ItemQuantity)
-                    {
-
-
-                        return Json(new { success = false, message = "Not Enough Stock Quantity!" }, JsonRequestBehavior.AllowGet);
-
-
-                    }
-
-                    else if (PartIDmatch == true && stkout.StockOutQuantity != null)
-                    {
-
-                        stkout.StockOutDescription = GetItem.ItemDescription;
-
-                        GetItem.ItemQuantity = GetItem.ItemQuantity - stkout.StockOutQuantity.Value;
-                        db.StockOuts.Add(stkout);
-                        db.SaveChanges();
-                        return Json(new { success = true, message = "Saved Successfully" }, JsonRequestBehavior.AllowGet);
-                    }
-
-                }
-
-            }
-            return View();
-
-        }
 
 
         [HttpGet]
@@ -165,11 +215,6 @@ namespace AutoPartsStockControlSystem.Controllers
 
                 }
 
-                //else if (GetItem.ItemQuantity <= 10)
-                //{
-
-
-                //}
 
                 else if (stkout.StockOutQuantity > GetItem.ItemQuantity)
                 {
@@ -290,128 +335,6 @@ namespace AutoPartsStockControlSystem.Controllers
 
         #endregion
 
-
-
-        #region Users
-        public ActionResult AdminUsers()
-        {
-            return View();
-        }
-
-        public ActionResult GetDataUsers()
-        {
-            using (EntitiesAPSCS db = new EntitiesAPSCS())
-            {
-                db.Configuration.LazyLoadingEnabled = false;
-                List<User> UsrList = db.Users.ToList<User>();
-                return Json(new { data = UsrList }, JsonRequestBehavior.AllowGet);
-            }
-        }
-
-
-        [HttpGet]
-        public ActionResult AddUsers(int id = 0)
-        {
-            if (id == 0)
-                return View(new User());
-            else
-            {
-                using (EntitiesAPSCS db = new EntitiesAPSCS())
-                {
-                    return View(db.Users.Where(x => x.UserID == id).FirstOrDefault<User>());
-
-              }
-            }
-        }
-
-
-
-        [HttpPost]
-        public ActionResult AddUsers(User usr)
-        {
-          
-            using (EntitiesAPSCS db = new EntitiesAPSCS())
-            {
-                if (usr.UserID == 0)
-                {
-                    if (db.Users.Any(x => x.IDCard == usr.IDCard))
-                    {
-
-                        return Json(new { success = false,  message = "IDCard Number Already Exist!"}, JsonRequestBehavior.AllowGet);
-                       
-                    }
-
-                    else
-                    {
-
-                        db.Users.Add(usr);
-                        db.SaveChanges();
-                        return Json(new { success = true, message = "Saved Successfully" }, JsonRequestBehavior.AllowGet);
-
-                    }
-
-                }
-                else
-                {
-
-                        db.Entry(usr).State = EntityState.Modified;
-                        db.SaveChanges();
-                        return Json(new { success = true, message = "Updated Successfully" }, JsonRequestBehavior.AllowGet); 
-                }
-            }
-
-
-        }
-
-
-        [HttpGet]
-        public ActionResult EditUsers(int id = 0)
-        {
-            if (id == 0)
-                return View(new User());
-            else
-            {
-                using (EntitiesAPSCS db = new EntitiesAPSCS())
-                {
-                    return View(db.Users.Where(x => x.UserID == id).FirstOrDefault<User>());
-
-                }
-            }
-        }
-
-
-
-        [HttpPost]
-        public ActionResult EditUsers(User usr)
-        {
-
-            using (EntitiesAPSCS db = new EntitiesAPSCS())
-            {
-
-                    db.Entry(usr).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return Json(new { success = true, message = "Updated Successfully" }, JsonRequestBehavior.AllowGet);
-                
-            }
-
-
-        }
-
-
-        [HttpPost]
-        public ActionResult DeleteUsers(int id)
-        {
-            using (EntitiesAPSCS db = new EntitiesAPSCS())
-            {
-                User usr = db.Users.Where(x => x.UserID == id).FirstOrDefault<User>();
-                db.Users.Remove(usr);
-                db.SaveChanges();
-                return Json(new { success = true, message = "Deleted Successfully" }, JsonRequestBehavior.AllowGet);
-            }
-        }
-
-
-        #endregion
 
 
         #region AdminSupplier

@@ -100,7 +100,6 @@ namespace AutoPartsStockControlSystem.Controllers
             }
         }
 
-
         [HttpGet]
         public ActionResult AddItem(int id = 0)
         {
@@ -116,8 +115,6 @@ namespace AutoPartsStockControlSystem.Controllers
             }
         }
 
-
-
         [HttpPost]
         public ActionResult AddItem(Item itm)
         {
@@ -132,27 +129,21 @@ namespace AutoPartsStockControlSystem.Controllers
                         return Json(new { success = false, message = "Item Part Number Already Exist!" }, JsonRequestBehavior.AllowGet);
 
                     }
-
                     else
                     {
-
                         db.Items.Add(itm);
                         db.SaveChanges();
                         return Json(new { success = true, message = "Saved Successfully" }, JsonRequestBehavior.AllowGet);
-
                     }
 
                 }
                 else
                 {
-
                     db.Entry(itm).State = EntityState.Modified;
                     db.SaveChanges();
                     return Json(new { success = true, message = "Updated Successfully" }, JsonRequestBehavior.AllowGet);
                 }
             }
-
-
         }
 
 

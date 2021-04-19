@@ -25,8 +25,6 @@ namespace AutoPartsStockControlSystem.Models
 
             public string Salt { get; set; }
 
-
-
     }
 
   

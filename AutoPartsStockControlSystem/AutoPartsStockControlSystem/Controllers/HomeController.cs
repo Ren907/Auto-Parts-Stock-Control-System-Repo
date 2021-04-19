@@ -11,7 +11,7 @@ using System.Text;
 
 namespace AutoPartsStockControlSystem.Controllers
 {
-    
+
     public class HomeController : Controller
     {
         // Declare Data Entitry with Database
@@ -30,7 +30,7 @@ namespace AutoPartsStockControlSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model)
         {
-           // hash the password used
+            // hash the password used
             string HashedPassword = GenerateSHA256Hash(model.Password);
             // Check if usertype is Admin or User
             var checkLoginAdmin = db.Users.Where(x => x.Email.Equals(model.Email) && x.Password.Equals(HashedPassword) && x.UserType.Equals("Admin")).FirstOrDefault();
@@ -70,7 +70,7 @@ namespace AutoPartsStockControlSystem.Controllers
 
         public ActionResult Logout()
         {
-            
+
             Session.Clear();
             return RedirectToAction("Login", "Home");
         }
@@ -145,7 +145,7 @@ namespace AutoPartsStockControlSystem.Controllers
         }
 
         //Reset Password after link
-        
+
         public ActionResult ResetPassword(string id)
         {
             //Verify the reset password link
@@ -189,7 +189,7 @@ namespace AutoPartsStockControlSystem.Controllers
                         string HashedPassword = GenerateSHA256Hash(model.ConfirmPassword);
 
                         user.Password = HashedPassword;
-                            
+
                         //make resetpasswordcode empty string now
                         user.ResetPasswordCode = "";
                         //to avoid validation issues, disable it
@@ -237,6 +237,6 @@ namespace AutoPartsStockControlSystem.Controllers
 
     }
 
-   
+
 }
 

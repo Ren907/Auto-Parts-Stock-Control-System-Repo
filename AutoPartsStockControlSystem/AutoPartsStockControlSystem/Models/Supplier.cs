@@ -18,17 +18,21 @@ namespace AutoPartsStockControlSystem.Models
         public int SupplierID { get; set; }
 
         [Display(Name = "Supplier Name")]
+        [Required]
         public string SupplierName { get; set; }
 
         [Display(Name = "Products Type")]
+        [Required]
         public string SupplierProductsType { get; set; }
 
         [Display(Name = "Contact")]
         [Phone]
+        [Required]
         public string SupplierContact { get; set; }
 
         [Display(Name = "Email")]
         [EmailAddress]
+        [Required]
         public string SupplierEmail { get; set; }
 
         [Display(Name = "Supplier Experience")]

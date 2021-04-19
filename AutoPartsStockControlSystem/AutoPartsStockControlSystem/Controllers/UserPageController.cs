@@ -10,7 +10,7 @@ namespace AutoPartsStockControlSystem.Controllers
 {
     public class UserPageController : Controller
     {
-       
+
         // GET: UserPage
         public ActionResult UserDashboard()
         {
@@ -33,14 +33,14 @@ namespace AutoPartsStockControlSystem.Controllers
         public ActionResult UserUpdateStock()
         {
 
-                return View();
+            return View();
         }
 
 
         [HttpPost]
         public ActionResult UserUpdateStock(Item itm)
         {
-           
+
             using (EntitiesAPSCS db = new EntitiesAPSCS())
             {
 
@@ -56,18 +56,18 @@ namespace AutoPartsStockControlSystem.Controllers
                     db.SaveChanges();
 
                     ViewBag.Message = String.Format("Part Number Quantity Updated Successfully!");
-                    
+
 
                 }
 
-            else
-            {
+                else
+                {
                     ViewBag.Message = String.Format("Please Enter Quantity And A Valid Part Number");
 
+                }
+                return View();
             }
-            return View();
         }
-    }
 
 
         public ActionResult GetDataLowStockTable()
@@ -240,7 +240,7 @@ namespace AutoPartsStockControlSystem.Controllers
 
             using (EntitiesAPSCS db = new EntitiesAPSCS())
             {
-                
+
                 var PartIDmatch = db.Items.Any(x => x.ItemPart.Equals(stkout.StockOutPart));
                 var GetItem = db.Items.FirstOrDefault(x => x.ItemPart == stkout.StockOutPart);
 
@@ -259,7 +259,7 @@ namespace AutoPartsStockControlSystem.Controllers
 
 
                     //}
-     
+
                     else if (stkout.StockOutQuantity > GetItem.ItemQuantity)
                     {
 
@@ -281,7 +281,7 @@ namespace AutoPartsStockControlSystem.Controllers
                     }
 
                 }
-               
+
             }
             return View();
 
@@ -316,7 +316,7 @@ namespace AutoPartsStockControlSystem.Controllers
                 var PartIDmatch = db.Items.Any(x => x.ItemPart.Equals(stkout.StockOutPart));
                 var GetItem = db.Items.FirstOrDefault(x => x.ItemPart == stkout.StockOutPart);
                 var GetSqty = db.StockOuts.FirstOrDefault(x => x.StockOutPart == stkout.StockOutPart);
-                
+
 
                 if (!db.Items.Any(x => x.ItemPart == stkout.StockOutPart))
                 {
@@ -327,7 +327,7 @@ namespace AutoPartsStockControlSystem.Controllers
 
                 //else if (GetItem.ItemQuantity <= 10)
                 //{
-                    
+
 
                 //}
 
@@ -342,7 +342,7 @@ namespace AutoPartsStockControlSystem.Controllers
                 {
 
                     GetItem.ItemQuantity = (GetItem.ItemQuantity + GetSqty.StockOutQuantity.Value) - stkout.StockOutQuantity.Value;
-   
+
                     db.Entry(stkoutID).CurrentValues.SetValues(stkout);
                     db.Entry(stkoutID).State = EntityState.Modified;
 
@@ -351,7 +351,7 @@ namespace AutoPartsStockControlSystem.Controllers
                 }
 
                 return View();
-               
+
             }
         }
 
@@ -359,7 +359,7 @@ namespace AutoPartsStockControlSystem.Controllers
         [HttpPost]
         public ActionResult DeleteStockOut(int id, StockOut stkout)
         {
-            
+
             using (EntitiesAPSCS db = new EntitiesAPSCS())
             {
                 stkout = db.StockOuts.Where(x => x.StockOutID == id).FirstOrDefault<StockOut>();
